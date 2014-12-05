@@ -1,0 +1,71 @@
+﻿Build started 2014/12/5 下午 09:18:37.
+     1>Project "D:\MindMap\MindMapUnitTesting\MindMapUnitTesting.vcxproj" on node 2 (Build target(s)).
+     1>CustomBuild:
+         Moc'ing GraphicsNode.h...
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /Ic:\gtest\include /I. /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtCore /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtGui /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt ..\MindMap\ChangeParentCommand.cpp ..\MindMap\Command.cpp ..\MindMap\CommandManger.cpp ..\MindMap\Component.cpp ..\MindMap\ComponentFactory.cpp ..\MindMap\Composite.cpp ..\MindMap\DeleteComponentCommand.cpp ..\MindMap\EditComponentCommand.cpp ..\MindMap\GraphicsNode.cpp ..\MindMap\InsertAChildNodeCmd.cpp ..\MindMap\InsertAParentNodeCmd.cpp ..\MindMap\InsertASiblingNodeCmd.cpp ..\MindMap\IObserver.cpp ..\MindMap\Model.cpp ..\MindMap\Node.cpp ..\MindMap\PresentationModel.cpp ..\MindMap\Root.cpp ..\MindMap\Subject.cpp CommandMangerTest.cpp ComponentFactoryTest.cpp ComponentTest.cpp CompositeTest.cpp IntegrationTest.cpp main.cpp ModelTest.cpp NodeTest.cpp RootTest.cpp
+         ChangeParentCommand.cpp
+         Command.cpp
+         CommandManger.cpp
+         Component.cpp
+         ComponentFactory.cpp
+         Composite.cpp
+         DeleteComponentCommand.cpp
+         EditComponentCommand.cpp
+         GraphicsNode.cpp
+         InsertAChildNodeCmd.cpp
+         InsertAParentNodeCmd.cpp
+         InsertASiblingNodeCmd.cpp
+         IObserver.cpp
+         Model.cpp
+         Node.cpp
+         PresentationModel.cpp
+         Root.cpp
+         Subject.cpp
+         CommandMangerTest.cpp
+         ComponentFactoryTest.cpp
+         Generating Code...
+         Compiling...
+         ComponentTest.cpp
+         CompositeTest.cpp
+         IntegrationTest.cpp
+         main.cpp
+         ModelTest.cpp
+         NodeTest.cpp
+         RootTest.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\MindMap\x64\Debug\\MindMapUnitTesting.exe" /NOLOGO /LIBPATH:C:\Qt\Qt5.3.2\5.3\msvc2013_64\lib c:\gtest\lib\gtestd.lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\MindMap\x64\Debug\MindMapUnitTesting.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\MindMap\x64\Debug\MindMapUnitTesting.lib" /MACHINE:X64 x64\Debug\ChangeParentCommand.obj
+         x64\Debug\Command.obj
+         x64\Debug\CommandManger.obj
+         x64\Debug\Component.obj
+         x64\Debug\ComponentFactory.obj
+         x64\Debug\Composite.obj
+         x64\Debug\DeleteComponentCommand.obj
+         x64\Debug\EditComponentCommand.obj
+         x64\Debug\GraphicsNode.obj
+         x64\Debug\InsertAChildNodeCmd.obj
+         x64\Debug\InsertAParentNodeCmd.obj
+         x64\Debug\InsertASiblingNodeCmd.obj
+         x64\Debug\IObserver.obj
+         x64\Debug\Model.obj
+         x64\Debug\Node.obj
+         x64\Debug\PresentationModel.obj
+         x64\Debug\Root.obj
+         x64\Debug\Subject.obj
+         x64\Debug\CommandMangerTest.obj
+         x64\Debug\ComponentFactoryTest.obj
+         x64\Debug\ComponentTest.obj
+         x64\Debug\CompositeTest.obj
+         x64\Debug\IntegrationTest.obj
+         x64\Debug\main.obj
+         x64\Debug\ModelTest.obj
+         x64\Debug\NodeTest.obj
+         x64\Debug\RootTest.obj
+     1>gtestd.lib(gtest-all.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'gtestd.lib(gtest-all.obj)' or at 'D:\MindMap\x64\Debug\vc120.pdb'; linking object as if no debug info
+         MindMapUnitTesting.vcxproj -> D:\MindMap\x64\Debug\MindMapUnitTesting.exe
+     1>Done Building Project "D:\MindMap\MindMapUnitTesting\MindMapUnitTesting.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:35.69

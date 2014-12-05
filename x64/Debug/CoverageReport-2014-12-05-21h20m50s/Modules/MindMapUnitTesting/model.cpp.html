@@ -1,0 +1,377 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		model.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">ï»¿#include "Model.h"
+#include "Node.h"
+#include "Root.h"
+#include "EditComponentCommand.h"
+#include "ChangeParentCommand.h"
+#include "DeleteComponentCommand.h"
+#include "InsertAChildNodeCmd.h"
+#include "InsertAParentNodeCmd.h"
+#include "InsertASiblingNodeCmd.h"
+
+Model::Model()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_selectedNode = NULL;</span>
+<span style = "background-color:#dfd">}</span>
+
+Model::~Model()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _mindMap.begin(); it != _mindMap.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		delete *it;</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::createMindMap(string description) //å»ºç«MindMap
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _mindMap.begin(); it != _mindMap.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		delete *it;</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	_mindMap.clear();</span>
+<span style = "background-color:#dfd">	Component *component = _factory.create(0, "Root", description);</span>
+<span style = "background-color:#dfd">	_mindMap.push_back(component);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::insertNode(string description, string mode) //æå¥Node
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	if (mode.compare("Child") == 0)</span>
+	{
+<span style = "background-color:#dfd">		Component *newNode = _factory.create("Node", description);</span>
+<span style = "background-color:#dfd">		_commandManger.execute(new InsertAChildNodeCmd(this, _selectedNode, newNode));</span>
+<span style = "background-color:#dfd">		_mindMap.push_back(newNode);</span>
+	}
+<span style = "background-color:#dfd">	else if (mode.compare("Parent") == 0)</span>
+	{
+<span style = "background-color:#dfd">		Component *newNode = _factory.create("Node", description);</span>
+<span style = "background-color:#dfd">		_commandManger.execute(new InsertAParentNodeCmd(this, _selectedNode, newNode));</span>
+<span style = "background-color:#dfd">		_mindMap.push_back(newNode);</span>
+	}
+<span style = "background-color:#dfd">	else if (mode.compare("Sibling") == 0)</span>
+	{
+<span style = "background-color:#dfd">		Component *newNode = _factory.create("Node", description);</span>
+<span style = "background-color:#dfd">		_commandManger.execute(new InsertASiblingNodeCmd(this, _selectedNode, newNode));</span>
+<span style = "background-color:#dfd">		_mindMap.push_back(newNode);</span>
+	}
+<span style = "background-color:#dfd">}</span>
+
+bool Model::readMindMapFile(string path)		//è®æª
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	if (!ifstream(path))</span>
+<span style = "background-color:#dfd">		return false;</span>
+
+	char line[100];		//æªæ¡æ¯è¡çæå­
+<span style = "background-color:#dfd">	ifstream myfile;</span>
+<span style = "background-color:#dfd">	int lineIndex = 0;</span>
+<span style = "background-color:#dfd">	list&lt;list&lt;int&gt;&gt; nodeChild;</span>
+<span style = "background-color:#dfd">	myfile.open(path, fstream::in);</span>
+	do
+	{
+<span style = "background-color:#dfd">		myfile.getline(line, sizeof(line));</span>
+<span style = "background-color:#dfd">		if (strlen(line) &gt; 0)</span>
+		{
+<span style = "background-color:#dfd">			if (lineIndex == 0)	//ç¬¬ä¸è¡çºRoot</span>
+			{
+<span style = "background-color:#dfd">				nodeChild.push_back(loadFileLine(line, "Root"));</span>
+			}
+<span style = "background-color:#dfd">			else</span>
+			{
+<span style = "background-color:#dfd">				nodeChild.push_back(loadFileLine(line, "Node"));</span>
+			}
+<span style = "background-color:#dfd">			lineIndex++;</span>
+		}
+<span style = "background-color:#dfd">	} while (!myfile.eof());</span>
+<span style = "background-color:#dfd">	myfile.close();</span>
+<span style = "background-color:#dfd">	makeNodeChild(nodeChild);</span>
+<span style = "background-color:#dfd">	return true;</span>
+<span style = "background-color:#dfd">}</span>
+
+list&lt;int&gt; Model::loadFileLine(char* line, string type)	//åææªæ¡å§å®¹ä¸è¡ä¸¦æ°å¢ å¾åå³child list
+<span style = "background-color:#dfd">{</span>
+	int id;
+<span style = "background-color:#dfd">	string description;</span>
+<span style = "background-color:#dfd">	list&lt;int&gt; child;</span>
+<span style = "background-color:#dfd">	char *tok = strtok(line, "\"");</span>
+<span style = "background-color:#dfd">	id = atoi(tok);			//id</span>
+<span style = "background-color:#dfd">	tok = strtok(NULL, "\"");</span>
+<span style = "background-color:#dfd">	description = tok;		//description</span>
+<span style = "background-color:#dfd">	tok = strtok(NULL, " ");</span>
+<span style = "background-color:#dfd">	while (tok != NULL)</span>
+	{
+<span style = "background-color:#dfd">		child.push_back(atoi(tok));</span>
+<span style = "background-color:#dfd">		tok = strtok(NULL, " ");</span>
+<span style = "background-color:#dfd">	}</span>
+	
+<span style = "background-color:#dfd">	if (type.compare("Root") == 0)</span>
+	{
+<span style = "background-color:#dfd">		createMindMap(description);</span>
+	}
+<span style = "background-color:#dfd">	else</span>
+	{
+<span style = "background-color:#dfd">		_mindMap.push_back(_factory.create(id, type, description));</span>
+	}
+<span style = "background-color:#dfd">	return child;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::makeNodeChild(list&lt;list&lt;int&gt;&gt; nodeChild)	//å»ºç«è®æªçéè¯
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	list&lt;list&lt;int&gt;&gt;::iterator i;</span>
+<span style = "background-color:#dfd">	list&lt;int&gt;::iterator j;</span>
+<span style = "background-color:#dfd">	list&lt;Component *&gt;::iterator node_it = _mindMap.begin();</span>
+<span style = "background-color:#dfd">	for (i = nodeChild.begin(); i != nodeChild.end(); ++i)</span>
+	{
+<span style = "background-color:#dfd">		for (j = (*i).begin(); j != (*i).end(); ++j)</span>
+		{
+<span style = "background-color:#dfd">			selectComponent(*j);</span>
+<span style = "background-color:#dfd">			Component* node = _selectedNode;</span>
+<span style = "background-color:#dfd">			(*node_it)-&gt;addChild(node);</span>
+<span style = "background-color:#dfd">			node-&gt;setParent(*node_it);</span>
+<span style = "background-color:#dfd">		}</span>
+<span style = "background-color:#dfd">		++node_it;</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Model::saveMindMapFile(string path) //å²å­MindMapå°æªæ¡
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ofstream myfile;</span>
+<span style = "background-color:#dfd">	myfile.open(path, ofstream::out);</span>
+<span style = "background-color:#dfd">	myfile &lt;&lt; fileContent().str();</span>
+<span style = "background-color:#dfd">	myfile.close();</span>
+<span style = "background-color:#dfd">	return true;</span>
+<span style = "background-color:#dfd">}</span>
+
+stringstream Model::fileContent()  //åå¾è¼¸åºæä»¶æ ¼å¼å§å®¹
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	stringstream content;</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _mindMap.begin(); it != _mindMap.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		content &lt;&lt; (**it).getId() &lt;&lt; " \"" &lt;&lt; (**it).getDescription() &lt;&lt; "\"";</span>
+<span style = "background-color:#dfd">		list&lt;Component *&gt; child = (**it).getNodeList();</span>
+<span style = "background-color:#dfd">		for (list&lt;Component *&gt;::iterator j = child.begin(); j != child.end(); ++j)</span>
+		{
+<span style = "background-color:#dfd">			content &lt;&lt; " " &lt;&lt; (**j).getId();</span>
+<span style = "background-color:#dfd">		}</span>
+<span style = "background-color:#dfd">		content &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	return content;</span>
+<span style = "background-color:#dfd">}</span>
+
+string Model::showMap() //å°åºMindMap
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	if (_mindMap.size() == 0)</span>
+<span style = "background-color:#fdd">		return "";</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "The mind map " &lt;&lt; _mindMap.front()-&gt;getDescription() &lt;&lt; " is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; _mindMap.front()-&gt;getMap(1).str();</span>
+	//cout &lt;&lt; ss.str();
+<span style = "background-color:#dfd">	return ss.str();</span>
+<span style = "background-color:#dfd">}</span>
+
+Component* Model::selectComponent(int id) //é¸åç¯é»åæå¥etc...
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _mindMap.begin(); it != _mindMap.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		if (id == (*it)-&gt;getId())</span>
+		{
+<span style = "background-color:#dfd">			_selectedNode = *it;</span>
+<span style = "background-color:#dfd">			break;</span>
+<span style = "background-color:#dfd">		}</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	return _selectedNode;</span>
+<span style = "background-color:#dfd">}</span>
+
+Component* Model::getComponent()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	return _selectedNode;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::editDescription(Component* component, string description)		//edit component description
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	component-&gt;setDescription(description);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::changeParentByNode(Component* myself, Component* newParent)		//change parent execute
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	if (myself-&gt;isChild(newParent))	//new parent is child </span>
+	{
+<span style = "background-color:#dfd">		myself-&gt;getParent()-&gt;removeChild(myself);</span>
+<span style = "background-color:#dfd">		list&lt;Component *&gt; nodeList = myself-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">		for (list&lt;Component *&gt;::iterator it = nodeList.begin(); it != nodeList.end(); ++it)</span>
+		{
+<span style = "background-color:#dfd">			(*it)-&gt;setParent(myself-&gt;getParent());</span>
+<span style = "background-color:#dfd">			myself-&gt;getParent()-&gt;addChild(*it);</span>
+<span style = "background-color:#dfd">			myself-&gt;removeChild(*it);</span>
+<span style = "background-color:#dfd">		}</span>
+<span style = "background-color:#dfd">		myself-&gt;setParent(newParent);</span>
+<span style = "background-color:#dfd">		newParent-&gt;addChild(myself);</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	else	//new parent is parent</span>
+	{
+<span style = "background-color:#dfd">		myself-&gt;getParent()-&gt;removeChild(myself);</span>
+<span style = "background-color:#dfd">		myself-&gt;setParent(newParent);</span>
+<span style = "background-color:#dfd">		newParent-&gt;addChild(myself);</span>
+	}
+<span style = "background-color:#dfd">}</span>
+
+void Model::changeParentWithList(Component* myself, Component* oldParent, list&lt;Component*&gt; childNodeList)	//change parent unexecute
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	myself-&gt;getParent()-&gt;removeChild(myself);</span>
+<span style = "background-color:#dfd">	myself-&gt;setParent(oldParent);</span>
+<span style = "background-color:#dfd">	oldParent-&gt;addChild(myself);</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = childNodeList.begin(); it != childNodeList.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		(*it)-&gt;getParent()-&gt;removeChild(*it);</span>
+<span style = "background-color:#dfd">		myself-&gt;addChild(*it);</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::deleteComponent(Component* component)	//delete node
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	list&lt;Component *&gt; nodelist = component-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">	Component* parent = component-&gt;getParent();</span>
+<span style = "background-color:#dfd">	parent-&gt;removeChild(component);</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = nodelist.begin(); it != nodelist.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		parent-&gt;addChild(*it);</span>
+<span style = "background-color:#dfd">		component-&gt;removeChild(*it);</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	_mindMap.remove(component);</span>
+	//delete component;
+<span style = "background-color:#dfd">}</span>
+
+void Model::addComponentWithList(Component* component, Component* parent, list&lt;Component*&gt; nodelist)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = nodelist.begin(); it != nodelist.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		parent-&gt;removeChild(*it);</span>
+<span style = "background-color:#dfd">		(*it)-&gt;setParent(component);</span>
+		//component-&gt;addChild(*it);	//component ååå°±æå­nodelist ä¸æªåªé¤ , åç¡éåå¢å 
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	parent-&gt;addChild(component);</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Model::isNodeExist(int id)		//check Is node exist
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _mindMap.begin(); it != _mindMap.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		if ((**it).getId() == id)</span>
+<span style = "background-color:#dfd">			return true;</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	return false;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Model::isRoot(int id)		//check Component is root
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _mindMap.begin(); it != _mindMap.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		if ((**it).getId() == id &amp;&amp; (**it).getType().compare("Root") == 0)</span>
+<span style = "background-color:#dfd">			return true;</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	return false;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::insertASiblingNode(Component* node, Component* newNode)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	node-&gt;addSibling(newNode);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::insertAParentNode(Component* node, Component* newNode)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	node-&gt;addParent(newNode);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::insertAChildNode(Component* node, Component* newNode)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	node-&gt;addChild(newNode);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::showGuiMap()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	if (_mindMap.size() == 0)</span>
+<span style = "background-color:#fdd">		return;</span>
+
+<span style = "background-color:#fdd">	vector&lt;int&gt; heighDepthX(_mindMap.size(), 0);</span>
+<span style = "background-color:#fdd">	_mindMap.front()-&gt;showGuiMap(1, &amp;heighDepthX);</span>
+<span style = "background-color:#fdd">}</span>
+
+void Model::clearSelect()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	for (list&lt;Component *&gt;::iterator it = _mindMap.begin(); it != _mindMap.end(); ++it)</span>
+	{
+<span style = "background-color:#fdd">		(*it)-&gt;setSelected(false);</span>
+<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#fdd">}</span>
+
+list&lt;Component *&gt; Model::getMindMap()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	return _mindMap;</span>
+<span style = "background-color:#fdd">}</span>
+
+void Model::changeParentCommand(int myselfId, int newParentId)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	selectComponent(myselfId);</span>
+<span style = "background-color:#dfd">	Component *myself = getComponent();</span>
+<span style = "background-color:#dfd">	selectComponent(newParentId);</span>
+<span style = "background-color:#dfd">	Component *newParent = getComponent();</span>
+<span style = "background-color:#dfd">	_commandManger.execute(new ChangeParentCommand(this, myself, newParent));</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::editDescriptionCommand(int id, string description)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	selectComponent(id);</span>
+<span style = "background-color:#dfd">	_commandManger.execute(new EditComponentCommand(this, getComponent(), description));</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::deleteComponentCommand(int id)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	selectComponent(id);</span>
+<span style = "background-color:#dfd">	_commandManger.execute(new DeleteComponentCommand(this, getComponent()));</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Model::undo()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	return _commandManger.undo();</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Model::redo()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	return _commandManger.redo();</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::cutNode()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_clipBoardNodeList.clear();</span>
+<span style = "background-color:#dfd">	_clipBoardNode = _selectedNode;</span>
+<span style = "background-color:#dfd">	_selectedNode-&gt;setSelected(false);</span>
+<span style = "background-color:#dfd">	_selectedNode-&gt;getParent()-&gt;removeChild(_selectedNode);</span>
+<span style = "background-color:#dfd">	_selectedNode-&gt;setParent(NULL);</span>
+<span style = "background-color:#dfd">	_selectedNode-&gt;cutNode(_mindMap, _clipBoardNodeList);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::copyNode()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_clipBoardNodeList.clear();</span>
+<span style = "background-color:#dfd">	_clipBoardNode = _selectedNode-&gt;clone(&amp;_factory, _clipBoardNodeList);</span>
+<span style = "background-color:#dfd">}</span>
+
+void Model::pasteNode()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_selectedNode-&gt;addChild(_clipBoardNode);	//make releation</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _clipBoardNodeList.begin(); it != _clipBoardNodeList.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		_mindMap.push_back(*it);</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	_clipBoardNodeList.clear();</span>
+<span style = "background-color:#dfd">	_clipBoardNode = NULL;</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

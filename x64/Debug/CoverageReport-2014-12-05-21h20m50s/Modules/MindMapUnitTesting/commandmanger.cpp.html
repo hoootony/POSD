@@ -1,0 +1,72 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		commandmanger.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "CommandManger.h"
+
+
+CommandManger::CommandManger()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+CommandManger::~CommandManger()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	while (!_undoCommands.empty())</span>
+	{
+<span style = "background-color:#dfd">		Command* c = _undoCommands.top();</span>
+<span style = "background-color:#dfd">		_undoCommands.pop();</span>
+<span style = "background-color:#dfd">		delete c;</span>
+<span style = "background-color:#dfd">	}</span>
+
+<span style = "background-color:#dfd">	while (!_redoCommands.empty())</span>
+	{
+<span style = "background-color:#dfd">		Command* c = _redoCommands.top();</span>
+<span style = "background-color:#dfd">		_redoCommands.pop();</span>
+<span style = "background-color:#dfd">		delete c;</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">}</span>
+
+bool CommandManger::redo()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	if (_redoCommands.size() == 0)</span>
+<span style = "background-color:#dfd">		return false;</span>
+
+<span style = "background-color:#dfd">	Command* command = _redoCommands.top();</span>
+<span style = "background-color:#dfd">	_redoCommands.pop();</span>
+<span style = "background-color:#dfd">	command-&gt;execute();</span>
+<span style = "background-color:#dfd">	_undoCommands.push(command);</span>
+<span style = "background-color:#dfd">	return true;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool CommandManger::undo()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	if (_undoCommands.size() == 0)</span>
+<span style = "background-color:#dfd">		return false;</span>
+
+<span style = "background-color:#dfd">	Command* command = _undoCommands.top();</span>
+<span style = "background-color:#dfd">	_undoCommands.pop();</span>
+<span style = "background-color:#dfd">	command-&gt;unexecute();</span>
+<span style = "background-color:#dfd">	_redoCommands.push(command);</span>
+<span style = "background-color:#dfd">	return true;</span>
+<span style = "background-color:#dfd">}</span>
+
+void CommandManger::execute(Command* command)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	command-&gt;execute();</span>
+<span style = "background-color:#dfd">	_undoCommands.push(command);</span>
+
+<span style = "background-color:#dfd">	while (!_redoCommands.empty())</span>
+	{
+<span style = "background-color:#dfd">		Command* c = _redoCommands.top();</span>
+<span style = "background-color:#dfd">		_redoCommands.pop();</span>
+<span style = "background-color:#dfd">		delete c;</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

@@ -1,0 +1,121 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		moc_graphicsnode.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">/****************************************************************************
+** Meta object code from reading C++ file 'GraphicsNode.h'
+**
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.3.2)
+**
+** WARNING! All changes made in this file will be lost!
+*****************************************************************************/
+
+#include "../../../MindMap/GraphicsNode.h"
+#include &lt;QtCore/qbytearray.h&gt;
+#include &lt;QtCore/qmetatype.h&gt;
+#if !defined(Q_MOC_OUTPUT_REVISION)
+#error "The header file 'GraphicsNode.h' doesn't include &lt;QObject&gt;."
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.3.2. It"
+#error "cannot be used with the include files from this version of Qt."
+#error "(The moc has changed too much.)"
+#endif
+
+QT_BEGIN_MOC_NAMESPACE
+struct qt_meta_stringdata_GraphicsNode_t {
+    QByteArrayData data[3];
+    char stringdata[27];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_GraphicsNode_t, stringdata) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_GraphicsNode_t qt_meta_stringdata_GraphicsNode = {
+    {
+QT_MOC_LITERAL(0, 0, 12),
+QT_MOC_LITERAL(1, 13, 12),
+QT_MOC_LITERAL(2, 26, 0)
+    },
+    "GraphicsNode\0mouseClicked\0"
+};
+#undef QT_MOC_LITERAL
+
+static const uint qt_meta_data_GraphicsNode[] = {
+
+ // content:
+       7,       // revision
+       0,       // classname
+       0,    0, // classinfo
+       1,   14, // methods
+       0,    0, // properties
+       0,    0, // enums/sets
+       0,    0, // constructors
+       0,       // flags
+       0,       // signalCount
+
+ // slots: name, argc, parameters, tag, flags
+       1,    0,   19,    2, 0x0a /* Public */,
+
+ // slots: parameters
+    QMetaType::Void,
+
+       0        // eod
+};
+
+void GraphicsNode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    if (_c == QMetaObject::InvokeMetaMethod) {</span>
+<span style = "background-color:#fdd">        GraphicsNode *_t = static_cast&lt;GraphicsNode *&gt;(_o);</span>
+<span style = "background-color:#fdd">        switch (_id) {</span>
+<span style = "background-color:#fdd">        case 0: _t-&gt;mouseClicked(); break;</span>
+        default: ;
+        }
+    }
+    Q_UNUSED(_a);
+<span style = "background-color:#fdd">}</span>
+
+const QMetaObject GraphicsNode::staticMetaObject = {
+    { &amp;QGraphicsObject::staticMetaObject, qt_meta_stringdata_GraphicsNode.data,
+      qt_meta_data_GraphicsNode,  qt_static_metacall, 0, 0}
+<span style = "background-color:#dfd">};</span>
+
+
+const QMetaObject *GraphicsNode::metaObject() const
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    return QObject::d_ptr-&gt;metaObject ? QObject::d_ptr-&gt;dynamicMetaObject() : &amp;staticMetaObject;</span>
+<span style = "background-color:#fdd">}</span>
+
+void *GraphicsNode::qt_metacast(const char *_clname)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    if (!_clname) return 0;</span>
+<span style = "background-color:#fdd">    if (!strcmp(_clname, qt_meta_stringdata_GraphicsNode.stringdata))</span>
+<span style = "background-color:#fdd">        return static_cast&lt;void*&gt;(const_cast&lt; GraphicsNode*&gt;(this));</span>
+<span style = "background-color:#fdd">    return QGraphicsObject::qt_metacast(_clname);</span>
+<span style = "background-color:#fdd">}</span>
+
+int GraphicsNode::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">    _id = QGraphicsObject::qt_metacall(_c, _id, _a);</span>
+<span style = "background-color:#fdd">    if (_id &lt; 0)</span>
+<span style = "background-color:#fdd">        return _id;</span>
+<span style = "background-color:#fdd">    if (_c == QMetaObject::InvokeMetaMethod) {</span>
+<span style = "background-color:#fdd">        if (_id &lt; 1)</span>
+<span style = "background-color:#fdd">            qt_static_metacall(this, _c, _id, _a);</span>
+<span style = "background-color:#fdd">        _id -= 1;</span>
+<span style = "background-color:#fdd">    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {</span>
+<span style = "background-color:#fdd">        if (_id &lt; 1)</span>
+<span style = "background-color:#fdd">            *reinterpret_cast&lt;int*&gt;(_a[0]) = -1;</span>
+<span style = "background-color:#fdd">        _id -= 1;</span>
+    }
+<span style = "background-color:#fdd">    return _id;</span>
+<span style = "background-color:#fdd">}</span>
+QT_END_MOC_NAMESPACE
+</pre>
+	</body>
+</html>

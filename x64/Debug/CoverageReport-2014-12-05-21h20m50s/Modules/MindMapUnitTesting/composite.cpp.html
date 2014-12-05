@@ -1,0 +1,195 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		composite.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "Composite.h"
+#include "GraphicsNode.h"
+
+Composite::Composite()
+<span style = "background-color:#dfd">{</span>
+	//_nodeList.clear();
+<span style = "background-color:#dfd">}</span>
+
+Composite::~Composite()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">}</span>
+
+void Composite::addChild(Component *node)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	if (_nodeList.size() == 0) </span>
+	{
+<span style = "background-color:#dfd">		_nodeList.push_back(node);	//¥[¤J¸`ÂI</span>
+	}
+<span style = "background-color:#dfd">	else	//´¡¤J¦bID¤ñ¦Û¤v¤jªº«e­±</span>
+	{
+<span style = "background-color:#dfd">		list&lt;Component *&gt;::iterator it;</span>
+<span style = "background-color:#dfd">		for (it = _nodeList.begin(); it != _nodeList.end(); ++it)</span>
+		{
+<span style = "background-color:#dfd">			if ((*it)-&gt;getId() &gt; node-&gt;getId())</span>
+			{
+<span style = "background-color:#dfd">				break;</span>
+			}
+<span style = "background-color:#dfd">		}</span>
+<span style = "background-color:#dfd">		_nodeList.insert(it, node);</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	node-&gt;setParent(this);	//³]©w¤÷¥À¿Ë</span>
+<span style = "background-color:#dfd">}</span>
+
+void Composite::removeChild(Component *node)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_nodeList.remove(node);</span>
+	//node-&gt;setParent(NULL);
+<span style = "background-color:#dfd">}</span>
+
+list&lt;Component *&gt; Composite::getNodeList()
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	return _nodeList;</span>
+<span style = "background-color:#dfd">}</span>
+
+stringstream Composite::getMap(int depth)  //¦L¥XMindMap
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	string blank(depth * 2, ' ');  //­pºâ²`«×ªºªÅ¥Õ¼Æ¶q</span>
+<span style = "background-color:#dfd">	int indexDepth = 0;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡Ï¡Ð" &lt;&lt; _description &lt;&lt; "(" &lt;&lt; _type &lt;&lt; "," &lt;&lt; "ID:" &lt;&lt; _id &lt;&lt; ")" &lt;&lt; endl;  //¦L¥X¸`ÂI¤º®e</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		for (indexDepth = 0; indexDepth &lt; depth; indexDepth++)	//print «e¸mªÅ¥Õ</span>
+		{
+<span style = "background-color:#dfd">			Component* parent = (*it);</span>
+<span style = "background-color:#dfd">			for (int i = 0; i &lt; depth - indexDepth; i++)</span>
+			{
+<span style = "background-color:#dfd">				parent = parent-&gt;getParent();</span>
+<span style = "background-color:#dfd">			}</span>
+<span style = "background-color:#dfd">			if (indexDepth &gt;= 1 &amp;&amp; parent-&gt;haveSibling()) // not root &amp;&amp; have sibling</span>
+<span style = "background-color:#dfd">				ss &lt;&lt; "¡U¡@";</span>
+<span style = "background-color:#dfd">			else</span>
+<span style = "background-color:#dfd">				ss &lt;&lt; "¡@¡@";  //two sapce</span>
+<span style = "background-color:#dfd">		}</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; (**it).getMap(depth+1).str();</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	return ss;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Composite::isChild(Component *node)	//check have node child
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	if (_id == node-&gt;getId())</span>
+<span style = "background-color:#dfd">		return true;</span>
+
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		if ((**it).isChild(node)) return true;</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	return false;</span>
+<span style = "background-color:#dfd">}</span>
+
+bool Composite::haveSibling()	//find node next have node
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	Component* node = this;</span>
+<span style = "background-color:#dfd">	if (node-&gt;getParent() == NULL)</span>
+<span style = "background-color:#dfd">		return false;</span>
+	
+<span style = "background-color:#dfd">	Component* parent = node-&gt;getParent();</span>
+<span style = "background-color:#dfd">	list&lt;Component *&gt; nodeList = parent-&gt;getNodeList();</span>
+<span style = "background-color:#dfd">	bool haveSibling = false;</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = nodeList.begin(); it != nodeList.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		if (node-&gt;getId() == (*it)-&gt;getId())	//find node itself</span>
+		{
+<span style = "background-color:#dfd">			if (++it == nodeList.end())		//node next sibling havn't node</span>
+<span style = "background-color:#dfd">				haveSibling = false;</span>
+<span style = "background-color:#dfd">			else							//node next sibling have node</span>
+<span style = "background-color:#dfd">				haveSibling = true;</span>
+<span style = "background-color:#dfd">			break;</span>
+<span style = "background-color:#dfd">		}</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	return haveSibling;</span>
+	//return false; //error
+<span style = "background-color:#dfd">}</span>
+
+void Composite::showGuiMap(int depthX, vector&lt;int&gt;* heighDepthX)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	if (_type.compare("Root") == 0)</span>
+	{
+<span style = "background-color:#fdd">		_x = depthX - 1;</span>
+<span style = "background-color:#fdd">		_y = getNodeYLevel() / 2.0 - 0.5;</span>
+	}
+
+<span style = "background-color:#fdd">	for (list&lt;Component *&gt;::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)</span>
+	{
+<span style = "background-color:#fdd">		(*it)-&gt;showGuiMap(depthX + 1, heighDepthX);</span>
+<span style = "background-color:#fdd">		(*it)-&gt;setX(depthX);</span>
+<span style = "background-color:#fdd">		if ((*it)-&gt;getNodeList().size() == 0)	//leaf node</span>
+<span style = "background-color:#fdd">			(*it)-&gt;setY((*heighDepthX)[0]++);</span>
+<span style = "background-color:#fdd">		else</span>
+		{
+<span style = "background-color:#fdd">			double endY = (*it)-&gt;getNodeList().front()-&gt;getY();</span>
+<span style = "background-color:#fdd">			double beginY = (*it)-&gt;getNodeList().back()-&gt;getY();</span>
+<span style = "background-color:#fdd">			(*it)-&gt;setY((endY + beginY) / 2);</span>
+<span style = "background-color:#fdd">		}</span>
+<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#fdd">}</span>
+
+int Composite::getX()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	return _x;</span>
+<span style = "background-color:#fdd">}</span>
+
+double Composite::getY()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	return _y;</span>
+<span style = "background-color:#fdd">}</span>
+
+void Composite::setX(int x)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	_x = x;</span>
+<span style = "background-color:#fdd">}</span>
+
+void Composite::setY(double y)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	_y = y;</span>
+<span style = "background-color:#fdd">}</span>
+
+int Composite::getNodeYLevel()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	if (_nodeList.size() == 0)</span>
+<span style = "background-color:#fdd">		return 1;</span>
+
+<span style = "background-color:#fdd">	int sum = 0;</span>
+<span style = "background-color:#fdd">	for (list&lt;Component *&gt;::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)</span>
+	{
+<span style = "background-color:#fdd">		sum += (*it)-&gt;getNodeYLevel();</span>
+<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#fdd">	return sum;</span>
+<span style = "background-color:#fdd">}</span>
+
+Component* Composite::clone(ComponentFactory* factory, list&lt;Component *&gt;&amp; clipBoardList)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	Component* newRoot = factory-&gt;create(_type, _description);	</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		Component* node = (*it)-&gt;clone(factory, clipBoardList);</span>
+<span style = "background-color:#dfd">		newRoot-&gt;addChild(node);</span>
+		//node-&gt;setParent(newRoot);
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">	clipBoardList.push_back(newRoot);</span>
+<span style = "background-color:#dfd">	return newRoot;</span>
+<span style = "background-color:#dfd">}</span>
+
+void Composite::cutNode(list&lt;Component *&gt;&amp; mindmap, list&lt;Component *&gt;&amp; clipBoardList)
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	clipBoardList.push_back(this);</span>
+<span style = "background-color:#dfd">	mindmap.remove(this);</span>
+<span style = "background-color:#dfd">	for (list&lt;Component *&gt;::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)</span>
+	{
+<span style = "background-color:#dfd">		(*it)-&gt;cutNode(mindmap, clipBoardList);</span>
+<span style = "background-color:#dfd">	}</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

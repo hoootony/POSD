@@ -1,0 +1,173 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		integrationtest.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "gtest\gtest.h"
+#include "..\MindMap\Model.h" 
+#include &lt;direct.h&gt;
+
+class IntegrationTest : public ::testing::Test
+{
+protected:
+	virtual void SetUp()
+<span style = "background-color:#dfd">	{</span>
+<span style = "background-color:#dfd">		_model = new Model();</span>
+		//_mkdir("testdata");
+<span style = "background-color:#dfd">		system("mkdir testdata");</span>
+<span style = "background-color:#dfd">		stringstream ss;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "0 \"Computer\" 2 7" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "1 \"windows\" 5 6" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "2 \"OS\" 1 3 4" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "3 \"IOS\"" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "4 \"Linux\"" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "5 \"DirectX\"" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "6 \"Microsoft Office\"" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "7 \"Network\" 8 9" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "8 \"Wireless\"" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">		ss &lt;&lt; "9 \"Cable\"" &lt;&lt; endl;</span>
+		
+<span style = "background-color:#dfd">		ofstream myfile;</span>
+		//myfile.open("testdata\\test_file1.mm", ofstream::out | ofstream::trunc);
+<span style = "background-color:#dfd">		myfile.open("testdata\\test_file1.mm", ofstream::out);</span>
+<span style = "background-color:#dfd">		myfile &lt;&lt; ss.str();</span>
+<span style = "background-color:#dfd">		myfile.close();</span>
+<span style = "background-color:#dfd">	}</span>
+	virtual void TearDown()
+<span style = "background-color:#dfd">	{</span>
+		//_rmdir("testdata");
+<span style = "background-color:#dfd">		system("rmdir /s /q testdata");</span>
+<span style = "background-color:#dfd">	}</span>
+	Model * _model;
+};
+
+<span style = "background-color:#dfd">TEST_F(IntegrationTest, testLoadFileNotExist)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;readMindMapFile("testdata\\file_not_exist.mm"));</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(IntegrationTest, testUndoDeleteNode)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;readMindMapFile("testdata\\test_file1.mm"));</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "The mind map Computer is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡Ï¡ÐComputer(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐOS(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡Ðwindows(Node,ID:1)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡U¡@¡Ï¡ÐDirectX(Node,ID:5)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡U¡@¡Ï¡ÐMicrosoft Office(Node,ID:6)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐIOS(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐLinux(Node,ID:4)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐNetwork(Node,ID:7)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡@¡@¡Ï¡ÐWireless(Node,ID:8)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡@¡@¡Ï¡ÐCable(Node,ID:9)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(ss.str(), _model-&gt;showMap());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(4);</span>
+<span style = "background-color:#dfd">	_model-&gt;insertNode("Test", "Child");</span>
+<span style = "background-color:#dfd">	Component *parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(10);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(10);</span>
+<span style = "background-color:#dfd">	parent = _model-&gt;getComponent()-&gt;getParent();</span>
+<span style = "background-color:#dfd">	_model-&gt;deleteComponentCommand(10);</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(parent-&gt;isChild(_model-&gt;getComponent()));</span>
+
+<span style = "background-color:#dfd">	_model-&gt;undo();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(10);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Test", _model-&gt;getComponent()-&gt;getDescription());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(IntegrationTest, testRedoDeleteNode)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;readMindMapFile("testdata\\test_file1.mm"));</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "The mind map Computer is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡Ï¡ÐComputer(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐOS(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡Ðwindows(Node,ID:1)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡U¡@¡Ï¡ÐDirectX(Node,ID:5)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡U¡@¡Ï¡ÐMicrosoft Office(Node,ID:6)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐIOS(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐLinux(Node,ID:4)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐNetwork(Node,ID:7)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡@¡@¡Ï¡ÐWireless(Node,ID:8)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡@¡@¡Ï¡ÐCable(Node,ID:9)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(ss.str(), _model-&gt;showMap());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(9);</span>
+<span style = "background-color:#dfd">	_model-&gt;insertNode("Test", "Child");</span>
+<span style = "background-color:#dfd">	Component *parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(10);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(10);</span>
+<span style = "background-color:#dfd">	parent = _model-&gt;getComponent()-&gt;getParent();</span>
+<span style = "background-color:#dfd">	_model-&gt;deleteComponentCommand(10);</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(parent-&gt;isChild(_model-&gt;getComponent()));</span>
+
+<span style = "background-color:#dfd">	_model-&gt;undo();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(10);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Test", _model-&gt;getComponent()-&gt;getDescription());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;getComponent()-&gt;getParent()-&gt;isChild(_model-&gt;getComponent()));</span>
+
+<span style = "background-color:#dfd">	_model-&gt;redo();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(10);</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;getComponent()-&gt;getParent()-&gt;isChild(_model-&gt;getComponent()));</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(IntegrationTest, testChangeNodeParent)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;readMindMapFile("testdata\\test_file1.mm"));</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "The mind map Computer is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡Ï¡ÐComputer(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐOS(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡Ðwindows(Node,ID:1)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡U¡@¡Ï¡ÐDirectX(Node,ID:5)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡U¡@¡Ï¡ÐMicrosoft Office(Node,ID:6)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐIOS(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐLinux(Node,ID:4)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐNetwork(Node,ID:7)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡@¡@¡Ï¡ÐWireless(Node,ID:8)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡@¡@¡Ï¡ÐCable(Node,ID:9)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(ss.str(), _model-&gt;showMap());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;changeParentCommand(1, 6);</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(6);</span>
+<span style = "background-color:#dfd">	Component *parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(1);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(2);</span>
+<span style = "background-color:#dfd">	parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(6);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;undo();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(2);</span>
+<span style = "background-color:#dfd">	parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(1);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(1);</span>
+<span style = "background-color:#dfd">	parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(6);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;redo();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(6);</span>
+<span style = "background-color:#dfd">	parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(1);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(2);</span>
+<span style = "background-color:#dfd">	parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(6);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

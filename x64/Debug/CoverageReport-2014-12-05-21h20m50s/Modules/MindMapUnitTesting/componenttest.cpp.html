@@ -1,0 +1,43 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		componenttest.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "gtest/gtest.h"
+#include "../MindMap/Component.h"
+#include "../MindMap/Node.h"
+
+class ComponentTest : public ::testing::Test
+{
+protected:
+	virtual void SetUp()
+<span style = "background-color:#dfd">	{</span>
+<span style = "background-color:#dfd">		_component = new Node();</span>
+<span style = "background-color:#dfd">		_component-&gt;_id = 0;</span>
+<span style = "background-color:#dfd">		_component-&gt;_description = "Home";</span>
+<span style = "background-color:#dfd">	}</span>
+
+	virtual void TearDown()
+<span style = "background-color:#dfd">	{</span>
+<span style = "background-color:#dfd">		delete _component;</span>
+<span style = "background-color:#dfd">	}</span>
+
+	Component* _component;
+};
+
+<span style = "background-color:#dfd">TEST_F(ComponentTest, component)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(0, _component-&gt;getId());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Home", _component-&gt;getDescription());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Node", _component-&gt;getType());</span>
+
+<span style = "background-color:#dfd">	_component-&gt;setDescription("House@123.456");</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("House@123.456", _component-&gt;getDescription());</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

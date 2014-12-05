@@ -1,0 +1,70 @@
+<html>
+    <title>
+        MindMapUnitTesting.exe
+    </title>
+    <head>
+        <link rel="stylesheet" type="text/css" href="third-party/css/style.css">
+        <script src="third-party/RGraph/libraries/RGraph.common.core.js" ></script>
+        <script src="third-party/RGraph/libraries/RGraph.common.dynamic.js" ></script>
+        <script src="third-party/RGraph/libraries/RGraph.common.tooltips.js"></script>
+        <script src="third-party/RGraph/libraries/RGraph.pie.js" ></script>
+
+        <script src="third-party/JQuery/jquery-1.11.1.min.js"></script>
+    </head>
+    <body>
+    <script>
+        $(document).ready(function ()
+        {
+            
+            new RGraph.Pie('pi_1a237513-e1c8-4cff-8656-801322926d3d', [1172, 315])
+                .set('labels', ['Cover 78%','Uncover 22%'])
+                .set('colors', ['rgb(0,255,0)','rgb(255,0,0)'])
+                .set('linewidth', 1)
+                .set('shadow', true)
+                .set('tooltips', ['cover 1172 lines (78%)', 'uncover 315 lines (22%)'])
+                .set('tooltips.event', 'onmousemove')
+                .set('labels.sticks', true)
+                .set('labels.sticks.length', 10)
+                .draw();
+            
+
+      })
+    </script>
+    
+        <h1>
+        MindMapUnitTesting.exe
+        </h1>
+        <h4>
+        
+        </h4>
+        <table id="rounded-corner">
+            <thead>
+                <tr>
+                    <th scope="col" class="rounded-left">Coverage</th>
+                    <th scope="col">Total lines</th>
+                    <th scope="col" class="rounded-right">Items</th>
+                </tr>
+            </thead> 
+            <tfoot>
+                <tr>
+                <td colspan="2" class="rounded-foot-left"></td>
+                <td class="rounded-foot-right"></td>
+                </tr>
+            </tfoot>            
+            <tbody>
+                
+                <tr>
+                    <td>
+            <canvas id="pi_1a237513-e1c8-4cff-8656-801322926d3d" width="280" height="100">Cover 78%</canvas>
+                    </td>            
+                    <td>1487</td>
+                    <td>            
+                       <a href="Modules\MindMapUnitTesting.html">D:\MindMap\x64\Debug\MindMapUnitTesting.exe</a> 
+                      
+                    </td>
+                </tr>        
+                
+            </tbody>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,82 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		graphicsnode.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#pragma once
+#include &lt;QGraphicsItem&gt;
+#include "GraphicsNode.h"
+#include &lt;QPainter&gt;
+#include &lt;string&gt;
+#include &lt;QInputDialog&gt;
+#include &lt;QTimer&gt;
+#include "moc_GraphicsNode.cpp"		//for testing project, because it can't complie the .h file
+
+const qreal GraphicsNode::WIDTH = 100;
+const qreal GraphicsNode::HEIGH = 40;
+const qreal GraphicsNode::AFTER_SPACE = 20;
+
+GraphicsNode::GraphicsNode(qreal x, qreal y, Component *node, PresentationModel *pModel, QMainWindow *parent)
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	_x = x;</span>
+<span style = "background-color:#fdd">	_y = y;</span>
+<span style = "background-color:#fdd">	_node = node;</span>
+<span style = "background-color:#fdd">	_pModel = pModel;</span>
+<span style = "background-color:#fdd">	_parent = parent;</span>
+<span style = "background-color:#fdd">}</span>
+
+GraphicsNode::~GraphicsNode()
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">}</span>
+
+QRectF GraphicsNode::boundingRect() const		//¥~®ØÄ²°Ê½d³ò
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	qreal penWidth = 1;</span>
+<span style = "background-color:#fdd">	qreal x = _x - penWidth / 2;</span>
+<span style = "background-color:#fdd">	qreal y = _y - penWidth / 2;</span>
+<span style = "background-color:#fdd">	return QRectF(x, y, WIDTH + penWidth, HEIGH + penWidth);</span>
+<span style = "background-color:#fdd">}</span>
+
+void GraphicsNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)	//Ã¸»s¹Ï®×
+<span style = "background-color:#fdd">{</span>
+	//¥~®Ø
+<span style = "background-color:#fdd">	if (_node-&gt;isSelected())</span>
+<span style = "background-color:#fdd">		painter-&gt;setPen(Qt::red);</span>
+<span style = "background-color:#fdd">	else</span>
+<span style = "background-color:#fdd">		painter-&gt;setPen(Qt::black);</span>
+<span style = "background-color:#fdd">	painter-&gt;drawRect(QRectF(_x, _y, WIDTH, HEIGH));</span>
+
+	//¤å¦r
+<span style = "background-color:#fdd">	painter-&gt;setPen(Qt::black);</span>
+<span style = "background-color:#fdd">	painter-&gt;drawText(QRectF(_x, _y, WIDTH, HEIGH), Qt::AlignVCenter | Qt::AlignHCenter, _node-&gt;getDescription().c_str());</span>
+<span style = "background-color:#fdd">}</span>
+
+void GraphicsNode::mousePressEvent(QGraphicsSceneMouseEvent *event)	//³æÀ»
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	QTimer::singleShot(10, this, SLOT(mouseClicked()));</span>
+	//QGraphicsItem::mousePressEvent(event);
+<span style = "background-color:#fdd">}</span>
+
+void GraphicsNode::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)	//ÂùÀ»
+<span style = "background-color:#fdd">{</span>
+	bool isOK;
+<span style = "background-color:#fdd">	QString input = QInputDialog::getText(_parent, "Input Dialog", "Please input your description:", QLineEdit::Normal, "your comment", &amp;isOK);</span>
+<span style = "background-color:#fdd">	if (isOK)</span>
+<span style = "background-color:#fdd">		_pModel-&gt;editDescriptionCommand(_pModel-&gt;getSelectNodeId(), input.toStdString());</span>
+<span style = "background-color:#fdd">	QGraphicsItem::mousePressEvent(event);</span>
+<span style = "background-color:#fdd">}</span>
+
+void GraphicsNode::mouseClicked()	//³æÀ» timeout mouse click
+<span style = "background-color:#fdd">{</span>
+<span style = "background-color:#fdd">	_pModel-&gt;clearSelect();</span>
+<span style = "background-color:#fdd">	_node-&gt;setSelected(true);</span>
+<span style = "background-color:#fdd">	_pModel-&gt;selectComponent(_node-&gt;getId());</span>
+<span style = "background-color:#fdd">	_pModel-&gt;notify();</span>
+<span style = "background-color:#fdd">}</span>
+</pre>
+	</body>
+</html>

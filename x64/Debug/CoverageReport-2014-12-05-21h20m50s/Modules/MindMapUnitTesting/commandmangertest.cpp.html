@@ -1,0 +1,180 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		commandmangertest.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "gtest\gtest.h"
+#include "..\MindMap\CommandManger.h"
+#include "..\MindMap\EditComponentCommand.h"
+#include "..\MindMap\DeleteComponentCommand.h"
+#include "..\MindMap\ChangeParentCommand.h"
+#include "..\MindMap\InsertAChildNodeCmd.h"
+#include "..\MindMap\InsertAParentNodeCmd.h"
+#include "..\MindMap\InsertASiblingNodeCmd.h"
+#include "..\MindMap\Node.h"
+#include "..\MindMap\Root.h"
+
+class CommandMangerTest : public ::testing::Test
+{
+protected:
+	virtual void SetUp()
+<span style = "background-color:#dfd">	{</span>
+<span style = "background-color:#dfd">		_model = new Model();</span>
+<span style = "background-color:#dfd">		_model-&gt;createMindMap("TestMindMap");</span>
+<span style = "background-color:#dfd">		_component1 = new Node("Node1", 1);</span>
+<span style = "background-color:#dfd">		_component2 = new Node("Node2", 2);</span>
+<span style = "background-color:#dfd">		_newComponent = new Node("NewNode", 3);</span>
+<span style = "background-color:#dfd">		_model-&gt;_mindMap.push_back(_component1);</span>
+<span style = "background-color:#dfd">		_model-&gt;_mindMap.push_back(_component2);</span>
+<span style = "background-color:#dfd">		_model-&gt;_mindMap.front()-&gt;addChild(_component1);</span>
+<span style = "background-color:#dfd">		_component1-&gt;addChild(_component2);</span>
+		
+<span style = "background-color:#dfd">		_editComponentCmd = new EditComponentCommand(_model, _component1, "EditedNode");</span>
+<span style = "background-color:#dfd">		_deleteComponentCmd = new DeleteComponentCommand(_model, _component1);</span>
+<span style = "background-color:#dfd">		_changeParentCmd = new ChangeParentCommand(_model, _component1, _component2);</span>
+<span style = "background-color:#dfd">		_insertChildCmd = new InsertAChildNodeCmd(_model, _component2, _newComponent);</span>
+<span style = "background-color:#dfd">		_insertParentCmd = new InsertAParentNodeCmd(_model, _component1, _newComponent);</span>
+<span style = "background-color:#dfd">		_insertSiblingCmd = new InsertASiblingNodeCmd(_model, _component2, _newComponent);</span>
+		//_manger._undoCommands.push(_editComponentCmd);
+		//_manger._undoCommands.push(_deleteComponentCmd);
+		//_manger._undoCommands.push(_changeParentCmd);
+		//_manger._redoCommands.push(_insertChildCmd);
+		//_manger._redoCommands.push(_insertParentCmd);
+		//_manger._redoCommands.push(_insertSiblingCmd);
+<span style = "background-color:#dfd">	}</span>
+	virtual void TearDown()
+<span style = "background-color:#dfd">	{</span>
+		//delete _editComponentCmd;
+		//delete _deleteComponentCmd;
+		//delete _changeParentCmd;
+		//delete _insertChildCmd;
+		//delete _insertParentCmd;
+		//delete _insertSiblingCmd;
+<span style = "background-color:#dfd">		delete _model;</span>
+<span style = "background-color:#dfd">	}</span>
+	Model *_model;
+	Component *_component1, *_component2, *_newComponent;
+
+	CommandManger _manger;
+	Command *_editComponentCmd, *_deleteComponentCmd, *_changeParentCmd, *_insertChildCmd, *_insertParentCmd, *_insertSiblingCmd;
+};
+
+<span style = "background-color:#dfd">TEST_F(CommandMangerTest, execute)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_manger._undoCommands.push(_editComponentCmd);</span>
+<span style = "background-color:#dfd">	_manger._undoCommands.push(_deleteComponentCmd);</span>
+<span style = "background-color:#dfd">	_manger._undoCommands.push(_changeParentCmd);</span>
+<span style = "background-color:#dfd">	_manger._redoCommands.push(_insertChildCmd);</span>
+<span style = "background-color:#dfd">	_manger._redoCommands.push(_insertParentCmd);</span>
+<span style = "background-color:#dfd">	_manger._redoCommands.push(_insertSiblingCmd);</span>
+
+<span style = "background-color:#dfd">	Command * editCmd = new EditComponentCommand(_model, _component2, "Edited by Test execute");</span>
+<span style = "background-color:#dfd">	_manger.execute(editCmd);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(editCmd, _manger._undoCommands.top());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(0, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(4, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(CommandMangerTest, redo)</span>
+<span style = "background-color:#dfd">{</span>
+	//ASSERT_TRUE(_manger.redo());
+	//ASSERT_EQ(2, _manger._redoCommands.size());
+	//ASSERT_EQ(4, _manger._undoCommands.size());
+	//ASSERT_TRUE(_manger.redo());
+	//ASSERT_EQ(1, _manger._redoCommands.size());
+	//ASSERT_EQ(5, _manger._undoCommands.size());
+	//ASSERT_TRUE(_manger.redo());
+	//ASSERT_EQ(0, _manger._redoCommands.size());
+	//ASSERT_EQ(6, _manger._undoCommands.size());
+	//ASSERT_FALSE(_manger.redo());
+	//ASSERT_EQ(0, _manger._redoCommands.size());
+	//ASSERT_EQ(6, _manger._undoCommands.size());
+<span style = "background-color:#dfd">	_deleteComponentCmd-&gt;execute();</span>
+<span style = "background-color:#dfd">	_changeParentCmd-&gt;execute();</span>
+<span style = "background-color:#dfd">	_editComponentCmd-&gt;execute();</span>
+<span style = "background-color:#dfd">	_manger._redoCommands.push(_deleteComponentCmd);</span>
+<span style = "background-color:#dfd">	_manger._redoCommands.push(_changeParentCmd);</span>
+<span style = "background-color:#dfd">	_manger._redoCommands.push(_editComponentCmd);</span>
+<span style = "background-color:#dfd">	_manger._redoCommands.push(_insertSiblingCmd);</span>
+<span style = "background-color:#dfd">	_manger._redoCommands.push(_insertParentCmd);</span>
+<span style = "background-color:#dfd">	_manger._redoCommands.push(_insertChildCmd);</span>
+
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.redo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(5, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(1, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.redo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(4, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(2, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.redo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(3, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(3, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.redo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(2, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(4, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.redo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(1, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(5, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.redo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(0, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(6, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_manger.redo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(0, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(6, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(CommandMangerTest, undo)</span>
+<span style = "background-color:#dfd">{</span>
+	//ASSERT_TRUE(_manger.undo());
+	//ASSERT_EQ(4, _manger._redoCommands.size());
+	//ASSERT_EQ(2, _manger._undoCommands.size());
+	//ASSERT_TRUE(_manger.undo());
+	//ASSERT_EQ(5, _manger._redoCommands.size());
+	//ASSERT_EQ(1, _manger._undoCommands.size());
+	//ASSERT_TRUE(_manger.undo());
+	//ASSERT_EQ(6, _manger._redoCommands.size());
+	//ASSERT_EQ(0, _manger._undoCommands.size());
+	//ASSERT_FALSE(_manger.undo());
+	//ASSERT_EQ(6, _manger._redoCommands.size());
+	//ASSERT_EQ(0, _manger._undoCommands.size());
+<span style = "background-color:#dfd">	_insertChildCmd-&gt;execute();</span>
+<span style = "background-color:#dfd">	_insertParentCmd-&gt;execute();</span>
+<span style = "background-color:#dfd">	_insertSiblingCmd-&gt;execute();</span>
+<span style = "background-color:#dfd">	_editComponentCmd-&gt;execute();</span>
+<span style = "background-color:#dfd">	_changeParentCmd-&gt;execute();</span>
+<span style = "background-color:#dfd">	_deleteComponentCmd-&gt;execute();</span>
+<span style = "background-color:#dfd">	_manger._undoCommands.push(_insertChildCmd);</span>
+<span style = "background-color:#dfd">	_manger._undoCommands.push(_insertParentCmd);</span>
+<span style = "background-color:#dfd">	_manger._undoCommands.push(_insertSiblingCmd);</span>
+<span style = "background-color:#dfd">	_manger._undoCommands.push(_editComponentCmd);</span>
+<span style = "background-color:#dfd">	_manger._undoCommands.push(_changeParentCmd);</span>
+<span style = "background-color:#dfd">	_manger._undoCommands.push(_deleteComponentCmd);</span>
+
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.undo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(1, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(5, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.undo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(2, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(4, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.undo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(3, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(3, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.undo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(4, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(2, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.undo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(5, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(1, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_manger.undo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(6, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(0, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_manger.undo());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(6, _manger._redoCommands.size());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(0, _manger._undoCommands.size());</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>

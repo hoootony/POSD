@@ -1,0 +1,306 @@
+<html>
+	<head>
+	<link href="../../third-party/google-code-prettify\prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../third-party/google-code-prettify\prettify.js"></script>
+	</head>
+	<title>
+		modeltest.cpp
+	</title>
+	<body onload="prettyPrint()">
+		<pre class="prettyprint lang-cpp linenums">#include "gtest/gtest.h"
+#include "../MindMap/Model.h"
+#include "..\MindMap\EditComponentCommand.h"
+#include "..\MindMap\DeleteComponentCommand.h"
+#include "..\MindMap\ChangeParentCommand.h"
+#include "..\MindMap\InsertAChildNodeCmd.h"
+#include "..\MindMap\InsertAParentNodeCmd.h"
+#include "..\MindMap\InsertASiblingNodeCmd.h"
+
+class ModelTest : public ::testing::Test
+{
+protected:
+	virtual void SetUp()
+<span style = "background-color:#dfd">	{</span>
+<span style = "background-color:#dfd">		_model = new Model();</span>
+<span style = "background-color:#dfd">		_model-&gt;createMindMap("TestMindMap");</span>
+<span style = "background-color:#dfd">		_selectedNode1 = _model-&gt;_factory.create(1, "Node", "Node1");</span>
+<span style = "background-color:#dfd">		_selectedNode2 = _model-&gt;_factory.create(2, "Node", "Node2");</span>
+<span style = "background-color:#dfd">		_selectedNode3 = _model-&gt;_factory.create(3, "Node", "Node3");</span>
+<span style = "background-color:#dfd">		_model-&gt;_mindMap.push_back(_selectedNode1);</span>
+<span style = "background-color:#dfd">		_model-&gt;_mindMap.push_back(_selectedNode2);</span>
+<span style = "background-color:#dfd">		_model-&gt;_mindMap.push_back(_selectedNode3);</span>
+<span style = "background-color:#dfd">		_model-&gt;_mindMap.front()-&gt;addChild(_selectedNode1);</span>
+<span style = "background-color:#dfd">		_selectedNode1-&gt;addChild(_selectedNode2);</span>
+<span style = "background-color:#dfd">		_selectedNode1-&gt;addSibling(_selectedNode3);</span>
+<span style = "background-color:#dfd">	}</span>
+
+	virtual void TearDown()
+<span style = "background-color:#dfd">	{</span>
+<span style = "background-color:#dfd">		delete _model;</span>
+<span style = "background-color:#dfd">	}</span>
+
+	Model *_model;
+	Component *_selectedNode1, *_selectedNode2, *_selectedNode3;
+};
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, showMap)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "The mind map TestMindMap is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡Ï¡ÐTestMindMap(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐNode1(Node,ID:1)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐNode2(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(ss.str(), _model-&gt;showMap());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, createMindMap)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_model-&gt;createMindMap("NewMindMap");</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("NewMindMap", _model-&gt;_mindMap.front()-&gt;getDescription());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Root", _model-&gt;_mindMap.front()-&gt;getType());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(0, _model-&gt;_mindMap.front()-&gt;getId());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, selectComponent)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(-1);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(NULL, _model-&gt;_selectedNode);</span>
+
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(4);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(NULL, _model-&gt;_selectedNode);</span>
+
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(0);	//root</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Root", _model-&gt;_selectedNode-&gt;getType());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("TestMindMap", _model-&gt;_selectedNode-&gt;getDescription());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(0, _model-&gt;_selectedNode-&gt;getId());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(3);	//node</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Node", _model-&gt;_selectedNode-&gt;getType());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Node3", _model-&gt;_selectedNode-&gt;getDescription());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(3, _model-&gt;_selectedNode-&gt;getId());</span>
+<span style = "background-color:#dfd">}</span>
+
+//TEST_F(ModelTest, setInsertMode)
+//{
+//	_model-&gt;_selectedNode = _model-&gt;_mindMap.front();	//root
+//	ASSERT_EQ("Root", _model-&gt;_selectedNode-&gt;getType());
+//	ASSERT_FALSE(_model-&gt;setInsertMode("a"));
+//	ASSERT_EQ("", _model-&gt;_insertMode);
+//	ASSERT_FALSE(_model-&gt;setInsertMode("c"));
+//	ASSERT_EQ("", _model-&gt;_insertMode);
+//	ASSERT_TRUE(_model-&gt;setInsertMode("b"));
+//	ASSERT_EQ("Child", _model-&gt;_insertMode);
+//	ASSERT_FALSE(_model-&gt;setInsertMode("CHild"));
+//	ASSERT_EQ("Child", _model-&gt;_insertMode);
+//	_model-&gt;_insertMode = "";
+//
+//	_model-&gt;_selectedNode = _selectedNode1;
+//	ASSERT_TRUE(_model-&gt;setInsertMode("b"));
+//	ASSERT_EQ("Child", _model-&gt;_insertMode);
+//	ASSERT_TRUE(_model-&gt;setInsertMode("a"));
+//	ASSERT_EQ("Parent", _model-&gt;_insertMode);
+//	ASSERT_TRUE(_model-&gt;setInsertMode("c"));
+//	ASSERT_EQ("Sibling", _model-&gt;_insertMode);
+//	ASSERT_FALSE(_model-&gt;setInsertMode("tenraP"));
+//	ASSERT_EQ("Sibling", _model-&gt;_insertMode);
+//	ASSERT_FALSE(_model-&gt;setInsertMode("123@SetMode!"));
+//	ASSERT_EQ("Sibling", _model-&gt;_insertMode);
+//}
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, insertNodeCommand)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_model-&gt;insertNode("NotSussess", "");</span>
+
+<span style = "background-color:#dfd">	_model-&gt;_selectedNode = _selectedNode1;</span>
+<span style = "background-color:#dfd">	_model-&gt;insertNode("NewChildByTest", "Child");</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(4, _selectedNode1-&gt;getNodeList().back()-&gt;getId());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Node", _selectedNode1-&gt;getNodeList().back()-&gt;getType());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("NewChildByTest", _selectedNode1-&gt;getNodeList().back()-&gt;getDescription());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(_selectedNode1, _selectedNode1-&gt;getNodeList().back()-&gt;getParent());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;_selectedNode = _selectedNode1;</span>
+<span style = "background-color:#dfd">	_model-&gt;insertNode("NewSiblingByTest", "Sibling");</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(5, _selectedNode1-&gt;getParent()-&gt;getNodeList().back()-&gt;getId());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Node", _selectedNode1-&gt;getParent()-&gt;getNodeList().back()-&gt;getType());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("NewSiblingByTest", _selectedNode1-&gt;getParent()-&gt;getNodeList().back()-&gt;getDescription());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(_selectedNode1-&gt;getParent(), _selectedNode1-&gt;getParent()-&gt;getNodeList().back()-&gt;getParent());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;_selectedNode = _selectedNode2;</span>
+<span style = "background-color:#dfd">	_model-&gt;insertNode("NewParentByTest", "Parent");</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(6, _selectedNode2-&gt;getParent()-&gt;getId());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("Node", _selectedNode2-&gt;getParent()-&gt;getType());</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("NewParentByTest", _selectedNode2-&gt;getParent()-&gt;getDescription());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, fileContent)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "0 \"TestMindMap\" 1 3" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "1 \"Node1\" 2" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "2 \"Node2\"" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "3 \"Node3\"" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(ss.str(), _model-&gt;fileContent().str());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, saveMindMapFile)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;saveMindMapFile("TestFile.mm"));</span>
+<span style = "background-color:#dfd">	fstream fs("TestFile.mm", ios::out);</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(fs.is_open());</span>
+<span style = "background-color:#dfd">	fs.close();</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, readMindMapFile)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;readMindMapFile("TestFile_not_exist.mm"));</span>
+
+<span style = "background-color:#dfd">	ofstream myfile;</span>
+<span style = "background-color:#dfd">	myfile.open("TestFile.mm", ios_base::app);</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "0 \"TestMindMap\" 1 3" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "1 \"Node1\" 2" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "2 \"Node2\"" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "3 \"Node3\"" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	myfile &lt;&lt; ss.str();</span>
+<span style = "background-color:#dfd">	myfile.close();</span>
+
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;readMindMapFile("TestFile.mm"));</span>
+	
+<span style = "background-color:#dfd">	stringstream s; </span>
+<span style = "background-color:#dfd">	s &lt;&lt; "The mind map TestMindMap is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡Ï¡ÐTestMindMap(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡Ï¡ÐNode1(Node,ID:1)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐNode2(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(s.str(), _model-&gt;showMap());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, editDescriptionCommand)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_model-&gt;editDescriptionCommand(0, "TestEditRoot");</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(0);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ("TestEditRoot", _model-&gt;getComponent()-&gt;getDescription());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, changeParentCommand)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_model-&gt;changeParentCommand(1, 2);</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "The mind map TestMindMap is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡Ï¡ÐTestMindMap(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐNode2(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐNode1(Node,ID:1)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(ss.str(), _model-&gt;showMap());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, deleteComponentCommand)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_model-&gt;deleteComponentCommand(1);</span>
+<span style = "background-color:#dfd">	stringstream ss;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "The mind map TestMindMap is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡Ï¡ÐTestMindMap(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐNode2(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ss &lt;&lt; "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(ss.str(), _model-&gt;showMap());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, isNodeExist)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;isNodeExist(-1));</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;isNodeExist(4));</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;isNodeExist(3));</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;isNodeExist(0));</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, isRoot)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;isRoot(-1));</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;isRoot(4));</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;isRoot(3));</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;isRoot(0));</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, redo)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;redo());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;changeParentCommand(1, 2);</span>
+<span style = "background-color:#dfd">	_model-&gt;deleteComponentCommand(1);</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(0);</span>
+<span style = "background-color:#dfd">	Component *parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(2);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;undo());</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(0);</span>
+<span style = "background-color:#dfd">	parent = _model-&gt;getComponent();</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(2);</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(parent, _model-&gt;getComponent()-&gt;getParent());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;undo());</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;undo());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;redo());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;redo());</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;redo());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, undo)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;undo());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;changeParentCommand(1, 3);</span>
+<span style = "background-color:#dfd">	_model-&gt;editDescriptionCommand(0, "YOYO");</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;undo());</span>
+<span style = "background-color:#dfd">	ASSERT_TRUE(_model-&gt;undo());</span>
+<span style = "background-color:#dfd">	ASSERT_FALSE(_model-&gt;undo());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, cutAndPasteNode)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(1);</span>
+<span style = "background-color:#dfd">	_model-&gt;cutNode();</span>
+<span style = "background-color:#dfd">	stringstream s;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "The mind map TestMindMap is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡Ï¡ÐTestMindMap(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(s.str(), _model-&gt;showMap());</span>
+
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(3);</span>
+<span style = "background-color:#dfd">	_model-&gt;pasteNode();</span>
+<span style = "background-color:#dfd">	s.str("");</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "The mind map TestMindMap is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡Ï¡ÐTestMindMap(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡@¡@¡Ï¡ÐNode1(Node,ID:1)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡@¡@¡@¡@¡Ï¡ÐNode2(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(s.str(), _model-&gt;showMap());</span>
+<span style = "background-color:#dfd">}</span>
+
+<span style = "background-color:#dfd">TEST_F(ModelTest, copyAndPasteNode)</span>
+<span style = "background-color:#dfd">{</span>
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(1);</span>
+<span style = "background-color:#dfd">	_model-&gt;copyNode();</span>
+<span style = "background-color:#dfd">	stringstream s;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "The mind map TestMindMap is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡Ï¡ÐTestMindMap(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡Ï¡ÐNode1(Node,ID:1)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐNode2(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(s.str(), _model-&gt;showMap());</span>
+
+
+<span style = "background-color:#dfd">	_model-&gt;selectComponent(3);</span>
+<span style = "background-color:#dfd">	_model-&gt;pasteNode();</span>
+<span style = "background-color:#dfd">	s.str("");</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "The mind map TestMindMap is displayed as follows:" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡Ï¡ÐTestMindMap(Root,ID:0)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡Ï¡ÐNode1(Node,ID:1)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡U¡@¡Ï¡ÐNode2(Node,ID:2)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡@¡@¡Ï¡ÐNode1(Node,ID:4)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	s &lt;&lt; "¡@¡@¡@¡@¡@¡@¡Ï¡ÐNode2(Node,ID:5)" &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">	ASSERT_EQ(s.str(), _model-&gt;showMap());</span>
+<span style = "background-color:#dfd">}</span>
+</pre>
+	</body>
+</html>
