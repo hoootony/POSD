@@ -17,6 +17,8 @@ PresentationModel::PresentationModel()
 	_actionEnabled["actionCut"] = false;
 	_actionEnabled["actionCopy"] = false;
 	_actionEnabled["actionPaste"] = false;
+	_actionEnabled["actionUndo"] = false;
+	_actionEnabled["actionRedo"] = false;
 	_isPaste = false;
 }
 
@@ -56,6 +58,7 @@ void PresentationModel::insertNode(string description)
 	if (description.compare("") == 0 || _model.getMindMap().size() == 0)
 		return;
 	_model.insertNode(description, _insertMode);
+	setGuiDoCommand();
 }
 
 void PresentationModel::createMindMap(string description)
@@ -92,13 +95,17 @@ bool PresentationModel::readMindMapFile(string path)
 bool PresentationModel::undo()
 {
 	//return _commandManger.undo();
-	return _model.undo();
+	bool sucess = _model.undo();
+	setGuiDoCommand();
+	return sucess;
 }
 
 bool PresentationModel::redo()
 {
 	//return _commandManger.redo();
-	return _model.redo();
+	bool sucess = _model.redo();
+	setGuiDoCommand();
+	return sucess;
 }
 
 bool PresentationModel::isNodeExist(int id)
@@ -119,6 +126,7 @@ void PresentationModel::changeParentCommand(int myselfId, int newParentId)
 	//Component *newParent = _model.getComponent();
 	//_commandManger.execute(new ChangeParentCommand(&_model, myself, newParent));
 	_model.changeParentCommand(myselfId, newParentId);
+	setGuiDoCommand();
 }
 
 void PresentationModel::editDescriptionCommand(int id, string description)
@@ -126,7 +134,8 @@ void PresentationModel::editDescriptionCommand(int id, string description)
 	//selectComponent(id);
 	//_commandManger.execute(new EditComponentCommand(&_model, _model.getComponent(), description));
 	_model.editDescriptionCommand(id, description); 
-	setGuiSelectNull();
+	setGuiSelectNull(); 
+	setGuiDoCommand();
 }
 
 void PresentationModel::deleteComponentCommand(int id)
@@ -135,6 +144,7 @@ void PresentationModel::deleteComponentCommand(int id)
 	//_commandManger.execute(new DeleteComponentCommand(&_model, _model.getComponent()));
 	_model.deleteComponentCommand(id);
 	setGuiSelectNull();
+	setGuiDoCommand();
 }
 
 void PresentationModel::showGuiMap(QGraphicsScene *scene, QMainWindow *parent)
@@ -154,10 +164,10 @@ void PresentationModel::showGuiMap(QGraphicsScene *scene, QMainWindow *parent)
 				scene->addLine(x, y + GraphicsNode::HEIGH / 2, (*it)->getParent()->getX()* (GraphicsNode::WIDTH + GraphicsNode::AFTER_SPACE) + GraphicsNode::WIDTH, (*it)->getParent()->getY()* (GraphicsNode::HEIGH + GraphicsNode::AFTER_SPACE) + GraphicsNode::HEIGH / 2);
 
 			//for debug use cout
-			//cout << "Description:" << (*it)->getDescription() << ", X:" << (*it)->getX() << ", Y:" << (*it)->getY() << endl;
+			cout << "Description:" << (*it)->getDescription() << ", X:" << (*it)->getX() << ", Y:" << (*it)->getY() << endl;
 		}
 	}
-	//cout << _model.showMap();
+	cout << _model.showMap();
 }
 
 bool PresentationModel::isActionEnabled(string actionName)
@@ -249,6 +259,7 @@ void PresentationModel::cutNode()
 	_model.cutNode();
 	_isPaste = true;
 	setGuiPaste();
+	setGuiDoCommand();
 }
 
 void PresentationModel::copyNode()
@@ -256,6 +267,7 @@ void PresentationModel::copyNode()
 	_model.copyNode();
 	_isPaste = true;
 	setGuiPaste();
+	//setGuiDoCommand();
 }
 
 void PresentationModel::pasteNode()
@@ -263,4 +275,11 @@ void PresentationModel::pasteNode()
 	_model.pasteNode();
 	_isPaste = false;
 	setGuiPaste();
+	setGuiDoCommand();
+}
+
+void PresentationModel::setGuiDoCommand()
+{
+	_actionEnabled["actionRedo"] = _model.canRedo();
+	_actionEnabled["actionUndo"] = _model.canUndo();
 }

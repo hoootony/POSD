@@ -62,5 +62,7 @@ public:
 	void cutNode();
 	void copyNode();
 	void pasteNode();
+	bool canRedo();
+	bool canUndo();
 };
 

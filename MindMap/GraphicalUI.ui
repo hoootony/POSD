@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MindMapClass</class>
- <widget class="QMainWindow" name="MindMapClass">
+ <class>GraphicalUIClass</class>
+ <widget class="QMainWindow" name="GraphicalUIClass">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -73,6 +73,9 @@
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -105,6 +108,9 @@
    <addaction name="actionInsert_a_Child"/>
    <addaction name="actionInsert_a_Sibling"/>
    <addaction name="actionInsert_a_Parent"/>
+   <addaction name="separator"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionEdit">
@@ -244,6 +250,24 @@
    </property>
    <property name="text">
     <string>Paste</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/undo12.png</normaloff>Resources/icon/undo12.png</iconset>
+   </property>
+   <property name="text">
+    <string>undo</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/redo11.png</normaloff>Resources/icon/redo11.png</iconset>
+   </property>
+   <property name="text">
+    <string>redo</string>
    </property>
   </action>
  </widget>

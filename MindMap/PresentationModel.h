@@ -19,6 +19,7 @@ private:
 	void setGuiSelectNull();
 	void setGuiCutAndCopy();
 	void setGuiPaste();
+	void setGuiDoCommand();
 public:
 	PresentationModel();
 	~PresentationModel();

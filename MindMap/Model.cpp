@@ -38,19 +38,16 @@ void Model::insertNode(string description, string mode) //插入Node
 	{
 		Component *newNode = _factory.create("Node", description);
 		_commandManger.execute(new InsertAChildNodeCmd(this, _selectedNode, newNode));
-		_mindMap.push_back(newNode);
 	}
 	else if (mode.compare("Parent") == 0)
 	{
 		Component *newNode = _factory.create("Node", description);
 		_commandManger.execute(new InsertAParentNodeCmd(this, _selectedNode, newNode));
-		_mindMap.push_back(newNode);
 	}
 	else if (mode.compare("Sibling") == 0)
 	{
 		Component *newNode = _factory.create("Node", description);
 		_commandManger.execute(new InsertASiblingNodeCmd(this, _selectedNode, newNode));
-		_mindMap.push_back(newNode);
 	}
 }
 
@@ -226,6 +223,7 @@ void Model::changeParentWithList(Component* myself, Component* oldParent, list<C
 
 void Model::deleteComponent(Component* component)	//delete node
 {
+	component->setSelected(false);
 	list<Component *> nodelist = component->getNodeList();
 	Component* parent = component->getParent();
 	parent->removeChild(component);
@@ -244,9 +242,10 @@ void Model::addComponentWithList(Component* component, Component* parent, list<C
 	{
 		parent->removeChild(*it);
 		(*it)->setParent(component);
-		//component->addChild(*it);	//component 原先就有存nodelist 且未刪除 , 則無需再增加
+		component->addChild(*it);	//component 原先就有存nodelist 且未刪除 , 則無需再增加
 	}
 	parent->addChild(component);
+	_mindMap.push_back(component);
 }
 
 bool Model::isNodeExist(int id)		//check Is node exist
@@ -272,16 +271,19 @@ bool Model::isRoot(int id)		//check Component is root
 void Model::insertASiblingNode(Component* node, Component* newNode)
 {
 	node->addSibling(newNode);
+	_mindMap.push_back(newNode);
 }
 
 void Model::insertAParentNode(Component* node, Component* newNode)
 {
 	node->addParent(newNode);
+	_mindMap.push_back(newNode);
 }
 
 void Model::insertAChildNode(Component* node, Component* newNode)
 {
 	node->addChild(newNode);
+	_mindMap.push_back(newNode);
 }
 
 void Model::showGuiMap()
@@ -362,4 +364,14 @@ void Model::pasteNode()
 	}
 	_clipBoardNodeList.clear();
 	_clipBoardNode = NULL;
+}
+
+bool Model::canRedo()
+{
+	return _commandManger.canRedo();
+}
+
+bool Model::canUndo()
+{
+	return _commandManger.canUndo();
 }

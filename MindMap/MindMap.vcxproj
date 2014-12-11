@@ -143,6 +143,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Composite.cpp" />
+    <ClCompile Include="CutNodeCommand.cpp" />
     <ClCompile Include="DeleteComponentCommand.cpp" />
     <ClCompile Include="EditComponentCommand.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_GraphicalUI.cpp">
@@ -184,6 +185,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="PasteNodeCommand.cpp" />
     <ClCompile Include="PresentationModel.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="Subject.cpp" />
@@ -236,6 +238,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentFactory.h" />
     <ClInclude Include="Composite.h" />
+    <ClInclude Include="CutNodeCommand.h" />
     <ClInclude Include="DeleteComponentCommand.h" />
     <ClInclude Include="EditComponentCommand.h" />
     <ClInclude Include="GeneratedFiles\ui_GraphicalUI.h" />
@@ -289,6 +292,7 @@
       </Command>
     </CustomBuild>
     <CustomBuild Include="PresentationModel.h" />
+    <ClInclude Include="PasteNodeCommand.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="Subject.h" />

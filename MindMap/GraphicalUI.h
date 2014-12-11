@@ -7,19 +7,19 @@
 #include <string>
 #include "IObserver.h"
 
-class MindMap : public QMainWindow, public IObserver
+class GraphicalUI : public QMainWindow, public IObserver
 {
 	Q_OBJECT
 
 public:
-	MindMap(PresentationModel *pModel, QWidget *parent = 0);
-	~MindMap();
+	GraphicalUI(PresentationModel *pModel, QWidget *parent = 0);
+	~GraphicalUI();
 
 public slots:
 	void actionExit();
-	void actionCreateMindMap();
-	void actionLoadMindMap();
-	void actionSaveMindMap();
+	void actionCreateGraphicalUI();
+	void actionLoadGraphicalUI();
+	void actionSaveGraphicalUI();
 	void actionEditNode();
 	void actionDeleteNode();
 	void actionInsertAChild();
@@ -30,13 +30,15 @@ public slots:
 	void actionCopy();
 	void actionPaste();
 	void refreshUI();
+	void actionUndo();
+	void actionRedo();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
 
 private:
-	Ui::MindMapClass ui;
+	Ui::GraphicalUIClass ui;
 	PresentationModel *_pModel;
 	QGraphicsScene *_scene;
 	string showInputDialog(string title);

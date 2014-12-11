@@ -6,7 +6,7 @@
 #include <QTimer>
 #include "IObserver.h"
 
-MindMap::MindMap(PresentationModel *pModel, QWidget *parent)
+GraphicalUI::GraphicalUI(PresentationModel *pModel, QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -17,9 +17,9 @@ MindMap::MindMap(PresentationModel *pModel, QWidget *parent)
 	_scene = new QGraphicsScene(this);
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(actionExit()));
-	connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(actionCreateMindMap()));
-	connect(ui.actionLoad, SIGNAL(triggered()), this, SLOT(actionLoadMindMap()));
-	connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(actionSaveMindMap()));
+	connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(actionCreateGraphicalUI()));
+	connect(ui.actionLoad, SIGNAL(triggered()), this, SLOT(actionLoadGraphicalUI()));
+	connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(actionSaveGraphicalUI()));
 	connect(ui.actionEdit, SIGNAL(triggered()), this, SLOT(actionEditNode()));
 	connect(ui.actionDelete, SIGNAL(triggered()), this, SLOT(actionDeleteNode()));
 	connect(ui.actionInsert_a_Child, SIGNAL(triggered()), this, SLOT(actionInsertAChild()));
@@ -29,104 +29,106 @@ MindMap::MindMap(PresentationModel *pModel, QWidget *parent)
 	connect(ui.actionCut, SIGNAL(triggered()), this, SLOT(actionCut()));
 	connect(ui.actionCopy, SIGNAL(triggered()), this, SLOT(actionCopy()));
 	connect(ui.actionPaste, SIGNAL(triggered()), this, SLOT(actionPaste()));
+	connect(ui.actionUndo, SIGNAL(triggered()), this, SLOT(actionUndo()));
+	connect(ui.actionRedo, SIGNAL(triggered()), this, SLOT(actionRedo()));
 
 	refreshUI();
 }
 
-MindMap::~MindMap()
+GraphicalUI::~GraphicalUI()
 {
 	delete _scene;
 }
 
-void MindMap::actionExit()
+void GraphicalUI::actionExit()
 {
 	exit(0);
 }
 
-void MindMap::actionCreateMindMap()
+void GraphicalUI::actionCreateGraphicalUI()
 {
 	string description = showInputDialog("Please input your description:");
 	_pModel->createMindMap(description);
 	refreshUI();
 }
 
-void MindMap::actionLoadMindMap()
+void GraphicalUI::actionLoadGraphicalUI()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open MindMap File"), QDir::currentPath(), tr("All files (*.*)"));
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open GraphicalUI File"), QDir::currentPath(), tr("MindMap (*.mm);;All files (*.*)"));
 	_pModel->readMindMapFile(fileName.toStdString());
 	refreshUI();
 }
 
-void MindMap::actionSaveMindMap()
+void GraphicalUI::actionSaveGraphicalUI()
 {
-	string fileName = QFileDialog::getSaveFileName(this, tr("Save MindMap File"), QDir::currentPath(), tr("All files (*.*)")).toStdString();
+	string fileName = QFileDialog::getSaveFileName(this, tr("Save GraphicalUI File"), QDir::currentPath(), tr("MindMap (*.mm);;All files (*.*)")).toStdString();
 	_pModel->saveMindMapFile(fileName);
 	_pModel->selectComponent(1);
 	refreshUI();
 }
 
-void MindMap::actionEditNode()
+void GraphicalUI::actionEditNode()
 {
 	int id = _pModel->getSelectNodeId();
 	_pModel->editDescriptionCommand(id, showInputDialog("Please input your description:"));
 	refreshUI();
 }
 
-void MindMap::actionDeleteNode()
+void GraphicalUI::actionDeleteNode()
 {
 	int id = _pModel->getSelectNodeId();
 	_pModel->deleteComponentCommand(id);
 	refreshUI();
 }
 
-void MindMap::actionInsertAChild()
+void GraphicalUI::actionInsertAChild()
 {
 	_pModel->setInsertMode("Child");
 	_pModel->insertNode(showInputDialog("Please input your description:"));
 	refreshUI();
 }
 
-void MindMap::actionInsertASibling()
+void GraphicalUI::actionInsertASibling()
 {
 	_pModel->setInsertMode("Sibling");
 	_pModel->insertNode(showInputDialog("Please input your description:"));
 	refreshUI();
 }
 
-void MindMap::actionInsertAParent()
+void GraphicalUI::actionInsertAParent()
 {
 	_pModel->setInsertMode("Parent");
 	_pModel->insertNode(showInputDialog("Please input your description:"));
 	refreshUI();
 }
 
-void MindMap::about()
+void GraphicalUI::about()
 {
-	QMessageBox::about(this, tr("About MindMap dialog"),
+	QMessageBox::about(this, tr("About GraphicalUI dialog"),
 		tr("Student ID: 103598041\n"
 		   "Student Name: Chang,Cheng-Yu\n"
 		   "Courese Name: POSD"));
 }
 
-void MindMap::actionCut()
+void GraphicalUI::actionCut()
 {
 	_pModel->cutNode();
 	refreshUI();
 }
 
-void MindMap::actionCopy()
+void GraphicalUI::actionCopy()
 {
 	_pModel->copyNode();
 	refreshUI();
 }
 
-void MindMap::actionPaste()
+void GraphicalUI::actionPaste()
 {
 	_pModel->pasteNode();
 	refreshUI();
 }
 
-string MindMap::showInputDialog(string title)
+string GraphicalUI::showInputDialog(string title)
 {
 	//title = "Please input your description:";
 	bool isOK;
@@ -136,7 +138,7 @@ string MindMap::showInputDialog(string title)
 	return "";
 }
 
-void MindMap::refreshUI()
+void GraphicalUI::refreshUI()
 {
 	//QGraphicsView Refresh
 	_scene->clear();
@@ -155,17 +157,31 @@ void MindMap::refreshUI()
 	ui.actionCut->setEnabled(_pModel->isActionEnabled(ui.actionCut->objectName().toStdString()));
 	ui.actionCopy->setEnabled(_pModel->isActionEnabled(ui.actionCopy->objectName().toStdString()));
 	ui.actionPaste->setEnabled(_pModel->isActionEnabled(ui.actionPaste->objectName().toStdString()));
+	ui.actionUndo->setEnabled(_pModel->isActionEnabled(ui.actionUndo->objectName().toStdString()));
+	ui.actionRedo->setEnabled(_pModel->isActionEnabled(ui.actionRedo->objectName().toStdString()));
 }
 
-void MindMap::mousePressEvent(QMouseEvent *event)
+void GraphicalUI::mousePressEvent(QMouseEvent *event)
 {
 	_pModel->clearSelect();
 	refreshUI();
 	QMainWindow::mousePressEvent(event);
 }
 
-void MindMap::mouseDoubleClickEvent(QMouseEvent *event)
+void GraphicalUI::mouseDoubleClickEvent(QMouseEvent *event)
 {
 	refreshUI();
 	QMainWindow::mouseDoubleClickEvent(event);
+}
+
+void GraphicalUI::actionUndo()
+{
+	_pModel->undo();
+	refreshUI();
+}
+
+void GraphicalUI::actionRedo()
+{
+	_pModel->redo();
+	refreshUI();
 }

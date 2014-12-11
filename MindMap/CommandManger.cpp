@@ -58,3 +58,17 @@ void CommandManger::execute(Command* command)
 		delete c;
 	}
 }
+
+bool CommandManger::canRedo()
+{
+	if (_redoCommands.size() == 0)
+		return false;
+	return true;
+}
+
+bool CommandManger::canUndo()
+{
+	if (_undoCommands.size() == 0)
+		return false;
+	return true;
+}

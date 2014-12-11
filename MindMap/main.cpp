@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	QApplication a(argc, argv);
 	PresentationModel pModel;
 	TextUIView textUI(&pModel);
-	MindMap gUI(&pModel);
+	GraphicalUI gUI(&pModel);
 	string input;
 
 	cout << "Please select the UI mode:" << endl;

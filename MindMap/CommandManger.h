@@ -21,5 +21,7 @@ public:
 	virtual void execute(Command * command);
 	bool redo();
 	bool undo();
+	bool canRedo();
+	bool canUndo();
 };
 

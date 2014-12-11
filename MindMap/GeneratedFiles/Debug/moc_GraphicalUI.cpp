@@ -18,50 +18,53 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_MindMap_t {
-    QByteArrayData data[16];
-    char stringdata[217];
+struct qt_meta_stringdata_GraphicalUI_t {
+    QByteArrayData data[18];
+    char stringdata[255];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_MindMap_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_GraphicalUI_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_MindMap_t qt_meta_stringdata_MindMap = {
+static const qt_meta_stringdata_GraphicalUI_t qt_meta_stringdata_GraphicalUI = {
     {
-QT_MOC_LITERAL(0, 0, 7),
-QT_MOC_LITERAL(1, 8, 10),
-QT_MOC_LITERAL(2, 19, 0),
-QT_MOC_LITERAL(3, 20, 19),
-QT_MOC_LITERAL(4, 40, 17),
-QT_MOC_LITERAL(5, 58, 17),
-QT_MOC_LITERAL(6, 76, 14),
-QT_MOC_LITERAL(7, 91, 16),
-QT_MOC_LITERAL(8, 108, 18),
-QT_MOC_LITERAL(9, 127, 20),
-QT_MOC_LITERAL(10, 148, 19),
-QT_MOC_LITERAL(11, 168, 5),
-QT_MOC_LITERAL(12, 174, 9),
-QT_MOC_LITERAL(13, 184, 10),
-QT_MOC_LITERAL(14, 195, 11),
-QT_MOC_LITERAL(15, 207, 9)
+QT_MOC_LITERAL(0, 0, 11),
+QT_MOC_LITERAL(1, 12, 10),
+QT_MOC_LITERAL(2, 23, 0),
+QT_MOC_LITERAL(3, 24, 23),
+QT_MOC_LITERAL(4, 48, 21),
+QT_MOC_LITERAL(5, 70, 21),
+QT_MOC_LITERAL(6, 92, 14),
+QT_MOC_LITERAL(7, 107, 16),
+QT_MOC_LITERAL(8, 124, 18),
+QT_MOC_LITERAL(9, 143, 20),
+QT_MOC_LITERAL(10, 164, 19),
+QT_MOC_LITERAL(11, 184, 5),
+QT_MOC_LITERAL(12, 190, 9),
+QT_MOC_LITERAL(13, 200, 10),
+QT_MOC_LITERAL(14, 211, 11),
+QT_MOC_LITERAL(15, 223, 9),
+QT_MOC_LITERAL(16, 233, 10),
+QT_MOC_LITERAL(17, 244, 10)
     },
-    "MindMap\0actionExit\0\0actionCreateMindMap\0"
-    "actionLoadMindMap\0actionSaveMindMap\0"
+    "GraphicalUI\0actionExit\0\0actionCreateGraphicalUI\0"
+    "actionLoadGraphicalUI\0actionSaveGraphicalUI\0"
     "actionEditNode\0actionDeleteNode\0"
     "actionInsertAChild\0actionInsertASibling\0"
     "actionInsertAParent\0about\0actionCut\0"
-    "actionCopy\0actionPaste\0refreshUI"
+    "actionCopy\0actionPaste\0refreshUI\0"
+    "actionUndo\0actionRedo"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_MindMap[] = {
+static const uint qt_meta_data_GraphicalUI[] = {
 
  // content:
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -69,22 +72,26 @@ static const uint qt_meta_data_MindMap[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   84,    2, 0x0a /* Public */,
-       3,    0,   85,    2, 0x0a /* Public */,
-       4,    0,   86,    2, 0x0a /* Public */,
-       5,    0,   87,    2, 0x0a /* Public */,
-       6,    0,   88,    2, 0x0a /* Public */,
-       7,    0,   89,    2, 0x0a /* Public */,
-       8,    0,   90,    2, 0x0a /* Public */,
-       9,    0,   91,    2, 0x0a /* Public */,
-      10,    0,   92,    2, 0x0a /* Public */,
-      11,    0,   93,    2, 0x0a /* Public */,
-      12,    0,   94,    2, 0x0a /* Public */,
-      13,    0,   95,    2, 0x0a /* Public */,
-      14,    0,   96,    2, 0x0a /* Public */,
-      15,    0,   97,    2, 0x0a /* Public */,
+       1,    0,   94,    2, 0x0a /* Public */,
+       3,    0,   95,    2, 0x0a /* Public */,
+       4,    0,   96,    2, 0x0a /* Public */,
+       5,    0,   97,    2, 0x0a /* Public */,
+       6,    0,   98,    2, 0x0a /* Public */,
+       7,    0,   99,    2, 0x0a /* Public */,
+       8,    0,  100,    2, 0x0a /* Public */,
+       9,    0,  101,    2, 0x0a /* Public */,
+      10,    0,  102,    2, 0x0a /* Public */,
+      11,    0,  103,    2, 0x0a /* Public */,
+      12,    0,  104,    2, 0x0a /* Public */,
+      13,    0,  105,    2, 0x0a /* Public */,
+      14,    0,  106,    2, 0x0a /* Public */,
+      15,    0,  107,    2, 0x0a /* Public */,
+      16,    0,  108,    2, 0x0a /* Public */,
+      17,    0,  109,    2, 0x0a /* Public */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -103,15 +110,15 @@ static const uint qt_meta_data_MindMap[] = {
        0        // eod
 };
 
-void MindMap::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void GraphicalUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        MindMap *_t = static_cast<MindMap *>(_o);
+        GraphicalUI *_t = static_cast<GraphicalUI *>(_o);
         switch (_id) {
         case 0: _t->actionExit(); break;
-        case 1: _t->actionCreateMindMap(); break;
-        case 2: _t->actionLoadMindMap(); break;
-        case 3: _t->actionSaveMindMap(); break;
+        case 1: _t->actionCreateGraphicalUI(); break;
+        case 2: _t->actionLoadGraphicalUI(); break;
+        case 3: _t->actionSaveGraphicalUI(); break;
         case 4: _t->actionEditNode(); break;
         case 5: _t->actionDeleteNode(); break;
         case 6: _t->actionInsertAChild(); break;
@@ -122,46 +129,48 @@ void MindMap::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 11: _t->actionCopy(); break;
         case 12: _t->actionPaste(); break;
         case 13: _t->refreshUI(); break;
+        case 14: _t->actionUndo(); break;
+        case 15: _t->actionRedo(); break;
         default: ;
         }
     }
     Q_UNUSED(_a);
 }
 
-const QMetaObject MindMap::staticMetaObject = {
-    { &QMainWindow::staticMetaObject, qt_meta_stringdata_MindMap.data,
-      qt_meta_data_MindMap,  qt_static_metacall, 0, 0}
+const QMetaObject GraphicalUI::staticMetaObject = {
+    { &QMainWindow::staticMetaObject, qt_meta_stringdata_GraphicalUI.data,
+      qt_meta_data_GraphicalUI,  qt_static_metacall, 0, 0}
 };
 
 
-const QMetaObject *MindMap::metaObject() const
+const QMetaObject *GraphicalUI::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *MindMap::qt_metacast(const char *_clname)
+void *GraphicalUI::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_MindMap.stringdata))
-        return static_cast<void*>(const_cast< MindMap*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_GraphicalUI.stringdata))
+        return static_cast<void*>(const_cast< GraphicalUI*>(this));
     if (!strcmp(_clname, "IObserver"))
-        return static_cast< IObserver*>(const_cast< MindMap*>(this));
+        return static_cast< IObserver*>(const_cast< GraphicalUI*>(this));
     return QMainWindow::qt_metacast(_clname);
 }
 
-int MindMap::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int GraphicalUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QMainWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 16)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 14;
+        _id -= 16;
     }
     return _id;
 }
