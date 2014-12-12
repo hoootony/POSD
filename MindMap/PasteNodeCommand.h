@@ -1,8 +1,19 @@
 #pragma once
-class PasteNodeCommand
+#include "Command.h"
+#include "Component.h"
+#include "Model.h"
+
+class PasteNodeCommand : public Command
 {
+private:
+	Model* _model;
+	Component* _selectedNode;
+	list<Component*> _clipBoardNodeList;
+
 public:
-	PasteNodeCommand();
+	PasteNodeCommand(Model* model, Component* selectedNode, list<Component*> clipBoardNodeList);
 	~PasteNodeCommand();
+	void execute();
+	void unexecute();
 };
 

@@ -59,10 +59,13 @@ public:
 	void deleteComponentCommand(int id);
 	bool redo();
 	bool undo();
-	void cutNode();
+	list<Component *> cutNode(Component* selectedNode);
 	void copyNode();
-	void pasteNode();
+	void pasteNode(Component *, list<Component *> clipBoardNodeList);
 	bool canRedo();
 	bool canUndo();
+	void cutNodeCommand();
+	void copyNodeCommand();
+	void pasteNodeCommand();
 };
 

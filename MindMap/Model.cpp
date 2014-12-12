@@ -7,6 +7,8 @@
 #include "InsertAChildNodeCmd.h"
 #include "InsertAParentNodeCmd.h"
 #include "InsertASiblingNodeCmd.h"
+#include "CutNodeCommand.h"
+#include "PasteNodeCommand.h"
 
 Model::Model()
 {
@@ -339,14 +341,15 @@ bool Model::redo()
 	return _commandManger.redo();
 }
 
-void Model::cutNode()
+list<Component *> Model::cutNode(Component* selectedNode)
 {
 	_clipBoardNodeList.clear();
-	_clipBoardNode = _selectedNode;
-	_selectedNode->setSelected(false);
-	_selectedNode->getParent()->removeChild(_selectedNode);
-	_selectedNode->setParent(NULL);
-	_selectedNode->cutNode(_mindMap, _clipBoardNodeList);
+	_clipBoardNode = selectedNode;
+	selectedNode->setSelected(false);
+	selectedNode->getParent()->removeChild(selectedNode);
+	selectedNode->setParent(NULL);
+	selectedNode->cutNode(_mindMap, _clipBoardNodeList);
+	return _clipBoardNodeList;
 }
 
 void Model::copyNode()
@@ -355,14 +358,15 @@ void Model::copyNode()
 	_clipBoardNode = _selectedNode->clone(&_factory, _clipBoardNodeList);
 }
 
-void Model::pasteNode()
+void Model::pasteNode(Component* node, list<Component *> clipBoardNodeList)
 {
-	_selectedNode->addChild(_clipBoardNode);	//make releation
-	for (list<Component *>::iterator it = _clipBoardNodeList.begin(); it != _clipBoardNodeList.end(); ++it)
+	node->addChild(clipBoardNodeList.back());	//make releation
+	//node->addChild(_clipBoardNode);
+	for (list<Component *>::iterator it = clipBoardNodeList.begin(); it != clipBoardNodeList.end(); ++it)
 	{
 		_mindMap.push_back(*it);
 	}
-	_clipBoardNodeList.clear();
+	clipBoardNodeList.clear();
 	_clipBoardNode = NULL;
 }
 
@@ -374,4 +378,20 @@ bool Model::canRedo()
 bool Model::canUndo()
 {
 	return _commandManger.canUndo();
+}
+
+void Model::cutNodeCommand()
+{
+	_commandManger.execute(new CutNodeCommand(this, _selectedNode));
+}
+
+void Model::copyNodeCommand()
+{
+	copyNode();
+}
+
+void Model::pasteNodeCommand()
+{
+	_commandManger.execute(new PasteNodeCommand(this, _selectedNode, _clipBoardNodeList));
+	//pasteNode(_selectedNode, _clipBoardNodeList);
 }

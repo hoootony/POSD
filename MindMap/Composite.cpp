@@ -174,10 +174,10 @@ Component* Composite::clone(ComponentFactory* factory, list<Component *>& clipBo
 
 void Composite::cutNode(list<Component *>& mindmap, list<Component *>& clipBoardList)
 {
-	clipBoardList.push_back(this);
-	mindmap.remove(this);
 	for (list<Component *>::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)
 	{
 		(*it)->cutNode(mindmap, clipBoardList);
 	}
+	clipBoardList.push_back(this);
+	mindmap.remove(this);
 }

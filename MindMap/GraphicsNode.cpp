@@ -7,8 +7,8 @@
 #include <QTimer>
 #include "moc_GraphicsNode.cpp"		//for testing project, because it can't complie the .h file
 
-const qreal GraphicsNode::WIDTH = 100;
-const qreal GraphicsNode::HEIGH = 40;
+const qreal GraphicsNode::MAX_WIDTH = 100;
+const qreal GraphicsNode::MAX_HEIGH = 40;
 const qreal GraphicsNode::AFTER_SPACE = 20;
 
 GraphicsNode::GraphicsNode(qreal x, qreal y, Component *node, PresentationModel *pModel, QMainWindow *parent)
@@ -18,10 +18,25 @@ GraphicsNode::GraphicsNode(qreal x, qreal y, Component *node, PresentationModel 
 	_node = node;
 	_pModel = pModel;
 	_parent = parent;
+
+	QFont myFont;
+	QFontMetrics fm(myFont);
+	_width = fm.width(_node->getDescription().c_str()) + AFTER_SPACE;
+	_heigh = MAX_HEIGH;
 }
 
 GraphicsNode::~GraphicsNode()
 {
+}
+
+qreal GraphicsNode::getHeigh()
+{
+	return _heigh;
+}
+
+qreal GraphicsNode::getWidth()
+{
+	return _width;
 }
 
 QRectF GraphicsNode::boundingRect() const		//外框觸動範圍
@@ -29,7 +44,7 @@ QRectF GraphicsNode::boundingRect() const		//外框觸動範圍
 	qreal penWidth = 1;
 	qreal x = _x - penWidth / 2;
 	qreal y = _y - penWidth / 2;
-	return QRectF(x, y, WIDTH + penWidth, HEIGH + penWidth);
+	return QRectF(x, y, _width + penWidth, _heigh + penWidth);
 }
 
 void GraphicsNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)	//繪製圖案
@@ -39,11 +54,13 @@ void GraphicsNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 		painter->setPen(Qt::red);
 	else
 		painter->setPen(Qt::black);
-	painter->drawRect(QRectF(_x, _y, WIDTH, HEIGH));
+	painter->drawRect(QRectF(_x, _y, _width, _heigh));
 
 	//文字
+	QFont myFont;
+	QFontMetrics fm(myFont);
 	painter->setPen(Qt::black);
-	painter->drawText(QRectF(_x, _y, WIDTH, HEIGH), Qt::AlignVCenter | Qt::AlignHCenter, _node->getDescription().c_str());
+	painter->drawText(_x, _y, _width, _heigh, Qt::AlignVCenter | Qt::AlignHCenter, _node->getDescription().c_str());
 }
 
 void GraphicsNode::mousePressEvent(QGraphicsSceneMouseEvent *event)	//單擊

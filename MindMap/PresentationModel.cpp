@@ -151,23 +151,30 @@ void PresentationModel::showGuiMap(QGraphicsScene *scene, QMainWindow *parent)
 {
 	_model.showGuiMap();
 	list<Component *> mindMap = _model.getMindMap();
+	list<GraphicsNode *> gNodeList;
 	
 	for (list<Component *>::iterator it = mindMap.begin(); it != mindMap.end(); ++it)
 	{
 		if ((*it)->getType() == "Root" || (*it)->getParent() != NULL)
 		{
-			qreal x = (*it)->getX() * (GraphicsNode::WIDTH + GraphicsNode::AFTER_SPACE);
-			qreal y = (*it)->getY() * (GraphicsNode::HEIGH + GraphicsNode::AFTER_SPACE);
+			qreal x = (*it)->getX() * (GraphicsNode::MAX_WIDTH + GraphicsNode::AFTER_SPACE);
+			qreal y = (*it)->getY() * (GraphicsNode::MAX_HEIGH + GraphicsNode::AFTER_SPACE);
 			QGraphicsItem *qNode = new GraphicsNode(x, y, (*it), this, parent);
 			scene->addItem(qNode);
 			if ((*it)->getType() != "Root")
-				scene->addLine(x, y + GraphicsNode::HEIGH / 2, (*it)->getParent()->getX()* (GraphicsNode::WIDTH + GraphicsNode::AFTER_SPACE) + GraphicsNode::WIDTH, (*it)->getParent()->getY()* (GraphicsNode::HEIGH + GraphicsNode::AFTER_SPACE) + GraphicsNode::HEIGH / 2);
+			{
+				QFont myFont;
+				QFontMetrics fm(myFont);
+				qreal parent_x = (*it)->getParent()->getX() * (GraphicsNode::MAX_WIDTH + GraphicsNode::AFTER_SPACE) + fm.width((*it)->getParent()->getDescription().c_str()) + GraphicsNode::AFTER_SPACE;
+				qreal parent_y = (*it)->getParent()->getY() * (GraphicsNode::MAX_HEIGH + GraphicsNode::AFTER_SPACE) + GraphicsNode::MAX_HEIGH / 2;
+				scene->addLine(x, y + GraphicsNode::MAX_HEIGH / 2, parent_x, parent_y);
+			}
 
 			//for debug use cout
-			cout << "Description:" << (*it)->getDescription() << ", X:" << (*it)->getX() << ", Y:" << (*it)->getY() << endl;
+			//cout << "Description:" << (*it)->getDescription() << ", X:" << (*it)->getX() << ", Y:" << (*it)->getY() << endl;
 		}
 	}
-	cout << _model.showMap();
+	//cout << _model.showMap();
 }
 
 bool PresentationModel::isActionEnabled(string actionName)
@@ -256,7 +263,7 @@ bool PresentationModel::haveCreateMindMap()
 
 void PresentationModel::cutNode()
 {
-	_model.cutNode();
+	_model.cutNodeCommand();
 	_isPaste = true;
 	setGuiPaste();
 	setGuiDoCommand();
@@ -264,7 +271,7 @@ void PresentationModel::cutNode()
 
 void PresentationModel::copyNode()
 {
-	_model.copyNode();
+	_model.copyNodeCommand();
 	_isPaste = true;
 	setGuiPaste();
 	//setGuiDoCommand();
@@ -272,7 +279,7 @@ void PresentationModel::copyNode()
 
 void PresentationModel::pasteNode()
 {
-	_model.pasteNode();
+	_model.pasteNodeCommand();
 	_isPaste = false;
 	setGuiPaste();
 	setGuiDoCommand();
