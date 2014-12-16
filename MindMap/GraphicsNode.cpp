@@ -19,24 +19,16 @@ GraphicsNode::GraphicsNode(qreal x, qreal y, Component *node, PresentationModel 
 	_pModel = pModel;
 	_parent = parent;
 
-	QFont myFont;
-	QFontMetrics fm(myFont);
-	_width = fm.width(_node->getDescription().c_str()) + AFTER_SPACE;
-	_heigh = MAX_HEIGH;
+	//QFont myFont;
+	//QFontMetrics fm(myFont);
+	//_width = fm.width(_node->getDescription().c_str()) + AFTER_SPACE;
+	//_heigh = MAX_HEIGH;
+	_heigh = _node->getHeigh();
+	_width = _node->getWidth();
 }
 
 GraphicsNode::~GraphicsNode()
 {
-}
-
-qreal GraphicsNode::getHeigh()
-{
-	return _heigh;
-}
-
-qreal GraphicsNode::getWidth()
-{
-	return _width;
 }
 
 QRectF GraphicsNode::boundingRect() const		//外框觸動範圍
@@ -60,7 +52,18 @@ void GraphicsNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 	QFont myFont;
 	QFontMetrics fm(myFont);
 	painter->setPen(Qt::black);
-	painter->drawText(_x, _y, _width, _heigh, Qt::AlignVCenter | Qt::AlignHCenter, _node->getDescription().c_str());
+	if (_heigh > fm.height() + Component::AFTER_SPACE)
+	{//自動換行
+		for (int i = 0; i < ((_heigh - Component::AFTER_SPACE) / fm.height()); i++)
+		{
+			double textHigh = fm.height() * i;
+			painter->drawText(_x, _y + Component::AFTER_SPACE / 2  + textHigh, _width, fm.height(), Qt::AlignVCenter | Qt::AlignHCenter, _node->getDescription().substr(0 + Component::MAX_WIDTH*i, Component::MAX_WIDTH).c_str());
+		}
+	}
+	else
+	{//不換行
+		painter->drawText(_x, _y, _width, _heigh, Qt::AlignVCenter | Qt::AlignHCenter, _node->getDescription().c_str());
+	}
 }
 
 void GraphicsNode::mousePressEvent(QGraphicsSceneMouseEvent *event)	//單擊

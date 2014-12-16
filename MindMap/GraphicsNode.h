@@ -14,8 +14,6 @@ public:
 	static const qreal AFTER_SPACE;
 	GraphicsNode(qreal x, qreal y, Component *node, PresentationModel *pModel, QMainWindow *parent = 0);
 	~GraphicsNode();
-	qreal getWidth();
-	qreal getHeigh();
 
 protected:
 	QRectF boundingRect() const;

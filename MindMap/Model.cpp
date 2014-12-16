@@ -293,8 +293,8 @@ void Model::showGuiMap()
 	if (_mindMap.size() == 0)
 		return;
 
-	vector<int> heighDepthX(_mindMap.size(), 0);
-	_mindMap.front()->showGuiMap(1, &heighDepthX);
+	double depthY;
+	_mindMap.front()->showGuiMap(1, &depthY);
 }
 
 void Model::clearSelect()

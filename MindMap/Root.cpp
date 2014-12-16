@@ -3,7 +3,8 @@
 Root::Root(string description, int id)
 {
 	_id = id;
-	_description = description;
+	//_description = description;
+	setDescription(description);
 	_type = "Root";
 }
 

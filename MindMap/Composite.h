@@ -17,8 +17,6 @@ class Composite : public Component
 	FRIEND_TEST(CompositeTest, haveSibling);
 protected:
 	list<Component *> _nodeList;
-	int _x;
-	double _y;
 public:
 	Composite();
 	~Composite();
@@ -32,7 +30,7 @@ public:
 	virtual Component* getParent() = 0;
 	bool isChild(Component *node);
 	bool haveSibling();
-	void showGuiMap(int depthX, vector<int>* heighDepthX);
+	void showGuiMap(int depthX, double* depthY);
 	int getX();
 	double getY();
 	void setX(int x);

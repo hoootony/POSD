@@ -177,6 +177,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GraphicalUI.cpp" />
+    <ClCompile Include="GraphicsMindMap.cpp" />
     <ClCompile Include="GraphicsNode.cpp" />
     <ClCompile Include="InsertAChildNodeCmd.cpp" />
     <ClCompile Include="InsertAParentNodeCmd.cpp" />
@@ -260,6 +261,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
+    <ClInclude Include="GraphicsMindMap.h" />
     <ClInclude Include="InsertAChildNodeCmd.h" />
     <ClInclude Include="InsertAParentNodeCmd.h" />
     <ClInclude Include="InsertASiblingNodeCmd.h" />

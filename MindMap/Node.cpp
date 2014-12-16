@@ -10,7 +10,8 @@ Node::Node()
 Node::Node(string description, int id)
 {
 	_id = id;
-	_description = description;
+	//_description = description;
+	setDescription(description);
 	_type = "Node";
 	_parent = NULL;
 }

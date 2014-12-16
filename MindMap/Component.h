@@ -16,7 +16,13 @@ protected:
 	string _description;
 	string _type;
 	bool _selected = false;
+	double _width;
+	double _heigh;
+	int _x;
+	double _y;
 public:
+	static const qreal MAX_WIDTH;
+	static const qreal AFTER_SPACE;
 	Component();
 	~Component();
 	int getId();
@@ -33,15 +39,17 @@ public:
 	virtual Component* getParent() = 0;
 	virtual bool isChild(Component *node) = 0;
 	virtual bool haveSibling() = 0;
-	virtual void showGuiMap(int depthX, vector<int>* heighDepthX) = 0;
+	virtual void showGuiMap(int depthX, double* depthY) = 0;
 	void setSelected(bool select);
 	bool isSelected();
-	virtual int getX() = 0;
-	virtual double getY() = 0;
-	virtual void setX(int x) = 0;
-	virtual void setY(double y) = 0;
+	int getX();
+	double getY();
+	void setX(int x);
+	void setY(double y);
 	virtual Component* clone(ComponentFactory* factory, list<Component *>& clipBoardList) = 0;
 	virtual int getNodeYLevel() = 0;
 	virtual void cutNode(list<Component *>& mindmap, list<Component *>& clipBoardList) = 0;
+	double getWidth();
+	double getHeigh();
 };
 

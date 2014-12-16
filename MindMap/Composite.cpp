@@ -103,50 +103,37 @@ bool Composite::haveSibling()	//find node next have node
 	//return false; //error
 }
 
-void Composite::showGuiMap(int depthX, vector<int>* heighDepthX)
+void Composite::showGuiMap(int depthX, double* depthY)
 {
+	for (list<Component *>::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)
+	{
+		(*it)->showGuiMap(depthX + 1, depthY);
+		(*it)->setX(depthX);
+		if ((*it)->getNodeList().size() == 0)	//判斷有無child
+		{// leaf node
+			(*it)->setY(*depthY);
+			(*depthY) += ((*it)->getHeigh() + Component::AFTER_SPACE);
+		}
+		else
+		{
+			double beginY = (*it)->getNodeList().front()->getY();
+			double endY = (*it)->getNodeList().back()->getY();
+			(*it)->setY((endY + beginY) / 2);
+			(*depthY) = max((*depthY), (*it)->getY() + (*it)->getHeigh() + Component::AFTER_SPACE);
+		}
+	}
+
 	if (_type.compare("Root") == 0)
 	{
 		_x = depthX - 1;
-		_y = getNodeYLevel() / 2.0 - 0.5;
-	}
-
-	for (list<Component *>::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)
-	{
-		(*it)->showGuiMap(depthX + 1, heighDepthX);
-		(*it)->setX(depthX);
-		if ((*it)->getNodeList().size() == 0)	//leaf node
-			(*it)->setY((*heighDepthX)[0]++);
-		else
-		{
-			double endY = (*it)->getNodeList().front()->getY();
-			double beginY = (*it)->getNodeList().back()->getY();
-			(*it)->setY((endY + beginY) / 2);
-		}
+		//_y = getNodeYLevel() / 2.0 - 0.5;
+		double endY = getNodeList().front()->getY();
+		double beginY = getNodeList().back()->getY();
+		_y = (endY + beginY) / 2;
 	}
 }
 
-int Composite::getX()
-{
-	return _x;
-}
-
-double Composite::getY()
-{
-	return _y;
-}
-
-void Composite::setX(int x)
-{
-	_x = x;
-}
-
-void Composite::setY(double y)
-{
-	_y = y;
-}
-
-int Composite::getNodeYLevel()
+int Composite::getNodeYLevel()	//取得總共有幾個末端節點
 {
 	if (_nodeList.size() == 0)
 		return 1;
