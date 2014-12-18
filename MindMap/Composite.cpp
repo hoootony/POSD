@@ -115,7 +115,7 @@ void Composite::showGuiMap(int depthX, double* depthY)
 			(*depthY) += ((*it)->getHeigh() + Component::AFTER_SPACE);
 		}
 		else
-		{
+		{// non leaf nodes
 			double beginY = (*it)->getNodeList().front()->getY();
 			double endY = (*it)->getNodeList().back()->getY();
 			(*it)->setY((endY + beginY) / 2);
@@ -127,9 +127,14 @@ void Composite::showGuiMap(int depthX, double* depthY)
 	{
 		_x = depthX - 1;
 		//_y = getNodeYLevel() / 2.0 - 0.5;
-		double endY = getNodeList().front()->getY();
-		double beginY = getNodeList().back()->getY();
-		_y = (endY + beginY) / 2;
+		if (_nodeList.size() == 0)
+			_y = *depthY;
+		else
+		{
+			double endY = getNodeList().front()->getY();
+			double beginY = getNodeList().back()->getY();
+			_y = (endY + beginY) / 2;
+		}
 	}
 }
 

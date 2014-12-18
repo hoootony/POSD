@@ -25,7 +25,7 @@ private:
 	list<Component *> _mindMap;
 	Component *_selectedNode;	//選擇到的節點 可以做編輯或複製等
 	Component* _clipBoardNode;
-	list<Component *> _clipBoardNodeList;
+	list<Component *> _clipBoardNodeList;	//最後面存放root點
 	ComponentFactory _factory;
 	CommandManger _commandManger;
 	list<int> loadFileLine(char* line, string type);
@@ -67,5 +67,6 @@ public:
 	void cutNodeCommand();
 	void copyNodeCommand();
 	void pasteNodeCommand();
+	bool canPaste();
 };
 

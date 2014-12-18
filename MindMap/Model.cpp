@@ -58,7 +58,7 @@ bool Model::readMindMapFile(string path)		//讀檔
 	if (!ifstream(path))
 		return false;
 
-	char line[100];		//檔案每行的文字
+	char line[1000];		//檔案每行的文字
 	ifstream myfile;
 	int lineIndex = 0;
 	list<list<int>> nodeChild;
@@ -360,6 +360,8 @@ void Model::copyNode()
 
 void Model::pasteNode(Component* node, list<Component *> clipBoardNodeList)
 {
+	_clipBoardNodeList.clear();
+	_clipBoardNode = NULL;
 	node->addChild(clipBoardNodeList.back());	//make releation
 	//node->addChild(_clipBoardNode);
 	for (list<Component *>::iterator it = clipBoardNodeList.begin(); it != clipBoardNodeList.end(); ++it)
@@ -367,7 +369,6 @@ void Model::pasteNode(Component* node, list<Component *> clipBoardNodeList)
 		_mindMap.push_back(*it);
 	}
 	clipBoardNodeList.clear();
-	_clipBoardNode = NULL;
 }
 
 bool Model::canRedo()
@@ -393,5 +394,12 @@ void Model::copyNodeCommand()
 void Model::pasteNodeCommand()
 {
 	_commandManger.execute(new PasteNodeCommand(this, _selectedNode, _clipBoardNodeList));
-	//pasteNode(_selectedNode, _clipBoardNodeList);
+}
+
+bool Model::canPaste()
+{
+	if (_clipBoardNode == NULL || _clipBoardNodeList.size() == 0)
+		return false;
+	else
+		return true;
 }

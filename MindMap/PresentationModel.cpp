@@ -155,10 +155,12 @@ void PresentationModel::showGuiMap(QGraphicsScene *scene, QMainWindow *parent)
 
 	GraphicsMindMap qMindMap;
 	qMindMap.showGuiMap(scene, mindMap, this, parent);
+	//cout << _model.showMap();		//debug
 }
 
 bool PresentationModel::isActionEnabled(string actionName)
 {
+	_actionEnabled["actionPaste"] = _model.canPaste();
 	return _actionEnabled[actionName];
 }
 
