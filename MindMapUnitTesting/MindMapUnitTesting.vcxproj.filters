@@ -124,14 +124,23 @@
     <ClCompile Include="RootTest.cpp">
       <Filter>Unit Testing Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\MindMap\PresentationModel.cpp">
-      <Filter>Source Files\Model</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>Unit Testing Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\CutNodeCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\PasteNodeCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\GraphicsMindMap.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\MindMap\GraphicsNode.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Unit Testing Files</Filter>
+    <ClCompile Include="..\MindMap\PresentationModel.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

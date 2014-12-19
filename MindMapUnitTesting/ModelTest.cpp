@@ -249,7 +249,7 @@ TEST_F(ModelTest, undo)
 TEST_F(ModelTest, cutAndPasteNode)
 {
 	_model->selectComponent(1);
-	_model->cutNode();
+	_model->cutNodeCommand();
 	stringstream s;
 	s << "The mind map TestMindMap is displayed as follows:" << endl;
 	s << "¡Ï¡ÐTestMindMap(Root,ID:0)" << endl;
@@ -257,7 +257,7 @@ TEST_F(ModelTest, cutAndPasteNode)
 	ASSERT_EQ(s.str(), _model->showMap());
 
 	_model->selectComponent(3);
-	_model->pasteNode();
+	_model->pasteNodeCommand();
 	s.str("");
 	s << "The mind map TestMindMap is displayed as follows:" << endl;
 	s << "¡Ï¡ÐTestMindMap(Root,ID:0)" << endl;
@@ -270,7 +270,7 @@ TEST_F(ModelTest, cutAndPasteNode)
 TEST_F(ModelTest, copyAndPasteNode)
 {
 	_model->selectComponent(1);
-	_model->copyNode();
+	_model->copyNodeCommand();
 	stringstream s;
 	s << "The mind map TestMindMap is displayed as follows:" << endl;
 	s << "¡Ï¡ÐTestMindMap(Root,ID:0)" << endl;
@@ -281,7 +281,7 @@ TEST_F(ModelTest, copyAndPasteNode)
 
 
 	_model->selectComponent(3);
-	_model->pasteNode();
+	_model->pasteNodeCommand();
 	s.str("");
 	s << "The mind map TestMindMap is displayed as follows:" << endl;
 	s << "¡Ï¡ÐTestMindMap(Root,ID:0)" << endl;
