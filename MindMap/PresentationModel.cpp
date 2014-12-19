@@ -135,7 +135,6 @@ void PresentationModel::editDescriptionCommand(int id, string description)
 	//selectComponent(id);
 	//_commandManger.execute(new EditComponentCommand(&_model, _model.getComponent(), description));
 	_model.editDescriptionCommand(id, description); 
-	setGuiSelectNull(); 
 	setGuiDoCommand();
 }
 
@@ -144,7 +143,6 @@ void PresentationModel::deleteComponentCommand(int id)
 	//selectComponent(id);
 	//_commandManger.execute(new DeleteComponentCommand(&_model, _model.getComponent()));
 	_model.deleteComponentCommand(id);
-	setGuiSelectNull();
 	setGuiDoCommand();
 }
 
@@ -160,7 +158,7 @@ void PresentationModel::showGuiMap(QGraphicsScene *scene, QMainWindow *parent)
 
 bool PresentationModel::isActionEnabled(string actionName)
 {
-	_actionEnabled["actionPaste"] = _model.canPaste();
+	_actionEnabled["actionPaste"] = (_model.canPaste() & _actionEnabled["actionEdit"]);
 	return _actionEnabled[actionName];
 }
 
@@ -270,5 +268,6 @@ void PresentationModel::pasteNode()
 void PresentationModel::setGuiDoCommand()
 {
 	_actionEnabled["actionRedo"] = _model.canRedo();
-	_actionEnabled["actionUndo"] = _model.canUndo();
+	_actionEnabled["actionUndo"] = _model.canUndo(); 
+	clearSelect();
 }
