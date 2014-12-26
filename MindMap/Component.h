@@ -18,8 +18,8 @@ protected:
 	bool _selected = false;
 	double _width;
 	double _heigh;
-	int _x;
-	double _y;
+	int _x;	//x level by int
+	double _y;	//y pixel loaction
 public:
 	static const qreal MAX_WIDTH;
 	static const qreal AFTER_SPACE;
