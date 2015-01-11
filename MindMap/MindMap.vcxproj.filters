@@ -191,10 +191,10 @@
     <ClCompile Include="DisplayNodeVisitor.cpp">
       <Filter>Source Files\Visitor</Filter>
     </ClCompile>
-    <ClCompile Include="NodeVisitor.cpp">
+    <ClCompile Include="SaveNodeVisitor.cpp">
       <Filter>Source Files\Visitor</Filter>
     </ClCompile>
-    <ClCompile Include="SaveNodeVisitor.cpp">
+    <ClCompile Include="NodeVisitor.cpp">
       <Filter>Source Files\Visitor</Filter>
     </ClCompile>
   </ItemGroup>

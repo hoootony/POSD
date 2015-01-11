@@ -6,5 +6,6 @@ class SaveNodeVisitor :
 public:
 	SaveNodeVisitor();
 	~SaveNodeVisitor();
+	void visitor(Root* root);
+	void visitor(Node* node);
 };
-
