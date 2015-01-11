@@ -43,6 +43,10 @@ public:
     QAction *actionPaste;
     QAction *actionUndo;
     QAction *actionRedo;
+    QAction *actionAdd_Rectangle;
+    QAction *actionAdd_Circle;
+    QAction *actionAdd_Triangle;
+    QAction *actionClean_styles;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QGraphicsView *graphicsView;
@@ -127,6 +131,26 @@ public:
         QIcon icon12;
         icon12.addFile(QStringLiteral("Resources/icon/redo11.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionRedo->setIcon(icon12);
+        actionAdd_Rectangle = new QAction(GraphicalUIClass);
+        actionAdd_Rectangle->setObjectName(QStringLiteral("actionAdd_Rectangle"));
+        QIcon icon13;
+        icon13.addFile(QStringLiteral("Resources/icon/big36.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionAdd_Rectangle->setIcon(icon13);
+        actionAdd_Circle = new QAction(GraphicalUIClass);
+        actionAdd_Circle->setObjectName(QStringLiteral("actionAdd_Circle"));
+        QIcon icon14;
+        icon14.addFile(QStringLiteral("Resources/icon/ellipse.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionAdd_Circle->setIcon(icon14);
+        actionAdd_Triangle = new QAction(GraphicalUIClass);
+        actionAdd_Triangle->setObjectName(QStringLiteral("actionAdd_Triangle"));
+        QIcon icon15;
+        icon15.addFile(QStringLiteral("Resources/icon/play103.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionAdd_Triangle->setIcon(icon15);
+        actionClean_styles = new QAction(GraphicalUIClass);
+        actionClean_styles->setObjectName(QStringLiteral("actionClean_styles"));
+        QIcon icon16;
+        icon16.addFile(QStringLiteral("Resources/icon/wiping16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionClean_styles->setIcon(icon16);
         centralWidget = new QWidget(GraphicalUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -182,6 +206,11 @@ public:
         menuEdit->addSeparator();
         menuEdit->addAction(actionUndo);
         menuEdit->addAction(actionRedo);
+        menuEdit->addSeparator();
+        menuEdit->addAction(actionAdd_Rectangle);
+        menuEdit->addAction(actionAdd_Circle);
+        menuEdit->addAction(actionAdd_Triangle);
+        menuEdit->addAction(actionClean_styles);
         menuHelp->addAction(actionAbout);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionLoad);
@@ -200,6 +229,11 @@ public:
         mainToolBar->addSeparator();
         mainToolBar->addAction(actionUndo);
         mainToolBar->addAction(actionRedo);
+        mainToolBar->addSeparator();
+        mainToolBar->addAction(actionAdd_Rectangle);
+        mainToolBar->addAction(actionAdd_Circle);
+        mainToolBar->addAction(actionAdd_Triangle);
+        mainToolBar->addAction(actionClean_styles);
 
         retranslateUi(GraphicalUIClass);
 
@@ -234,6 +268,10 @@ public:
         actionPaste->setText(QApplication::translate("GraphicalUIClass", "Paste", 0));
         actionUndo->setText(QApplication::translate("GraphicalUIClass", "undo", 0));
         actionRedo->setText(QApplication::translate("GraphicalUIClass", "redo", 0));
+        actionAdd_Rectangle->setText(QApplication::translate("GraphicalUIClass", "Add Rectangle", 0));
+        actionAdd_Circle->setText(QApplication::translate("GraphicalUIClass", "Add Circle", 0));
+        actionAdd_Triangle->setText(QApplication::translate("GraphicalUIClass", "Add Triangle", 0));
+        actionClean_styles->setText(QApplication::translate("GraphicalUIClass", "Clean styles", 0));
         menuFile->setTitle(QApplication::translate("GraphicalUIClass", "File", 0));
         menuEdit->setTitle(QApplication::translate("GraphicalUIClass", "Edit", 0));
         menuHelp->setTitle(QApplication::translate("GraphicalUIClass", "Help", 0));

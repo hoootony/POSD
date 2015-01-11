@@ -22,7 +22,7 @@ class Model
 	FRIEND_TEST(ModelTest, insertNodeCommand);
 	FRIEND_TEST(ModelTest, fileContent);
 private:
-	list<Component *> _mindMap;
+	list<Component *> _mindMap; 
 	Component *_selectedNode;	//選擇到的節點 可以做編輯或複製等
 	Component* _clipBoardNode;
 	list<Component *> _clipBoardNodeList;	//最後面存放root點
@@ -32,6 +32,7 @@ private:
 	void makeNodeChild(list<list<int>> nodeChild);
 	stringstream fileContent();
 public:
+	list<Component *> _mindMapDecorter{};
 	Model();
 	~Model();
 	void createMindMap(string description);
@@ -68,5 +69,9 @@ public:
 	void copyNodeCommand();
 	void pasteNodeCommand();
 	bool canPaste();
+	void addRectangleStyle();
+	void addCircleStyle();
+	void addTriangleStyle();
+	void cleanStyles();
 };
 

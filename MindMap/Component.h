@@ -19,10 +19,11 @@ protected:
 	double _width;
 	double _heigh;
 	int _x;	//x level by int
+	double _xPixel;
 	double _y;	//y pixel loaction
 public:
 	static const qreal MAX_WIDTH;
-	static const qreal AFTER_SPACE;
+	static const qreal AFTER_SPACE;  
 	Component();
 	~Component();
 	int getId();
@@ -51,5 +52,10 @@ public:
 	virtual void cutNode(list<Component *>& mindmap, list<Component *>& clipBoardList) = 0;
 	double getWidth();
 	double getHeigh();
+	virtual void draw() = 0;
+	void setXPixel(double xPixel);
+	double getXPixel();
+	virtual Component* getComposite() = 0;
+	virtual void replaceChild(Component* oldNode, Component* newNode) = 0;
 };
 

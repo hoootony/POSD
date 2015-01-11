@@ -31,6 +31,10 @@ GraphicalUI::GraphicalUI(PresentationModel *pModel, QWidget *parent)
 	connect(ui.actionPaste, SIGNAL(triggered()), this, SLOT(actionPaste()));
 	connect(ui.actionUndo, SIGNAL(triggered()), this, SLOT(actionUndo()));
 	connect(ui.actionRedo, SIGNAL(triggered()), this, SLOT(actionRedo()));
+	connect(ui.actionAdd_Rectangle, SIGNAL(triggered()), this, SLOT(actionAddRectangle()));
+	connect(ui.actionAdd_Circle, SIGNAL(triggered()), this, SLOT(actionAddCircle()));
+	connect(ui.actionAdd_Triangle, SIGNAL(triggered()), this, SLOT(actionAddTriangle()));
+	connect(ui.actionClean_styles, SIGNAL(triggered()), this, SLOT(actionCleanStyles()));
 
 	refreshUI();
 }
@@ -159,6 +163,11 @@ void GraphicalUI::refreshUI()
 	ui.actionPaste->setEnabled(_pModel->isActionEnabled(ui.actionPaste->objectName().toStdString()));
 	ui.actionUndo->setEnabled(_pModel->isActionEnabled(ui.actionUndo->objectName().toStdString()));
 	ui.actionRedo->setEnabled(_pModel->isActionEnabled(ui.actionRedo->objectName().toStdString()));
+	ui.actionAdd_Rectangle->setEnabled(_pModel->isActionEnabled(ui.actionAdd_Rectangle->objectName().toStdString()));
+	ui.actionAdd_Circle->setEnabled(_pModel->isActionEnabled(ui.actionAdd_Circle->objectName().toStdString()));
+	ui.actionAdd_Triangle->setEnabled(_pModel->isActionEnabled(ui.actionAdd_Triangle->objectName().toStdString()));
+	ui.actionClean_styles->setEnabled(_pModel->isActionEnabled(ui.actionClean_styles->objectName().toStdString()));
+		
 }
 
 void GraphicalUI::mousePressEvent(QMouseEvent *event)
@@ -183,5 +192,29 @@ void GraphicalUI::actionUndo()
 void GraphicalUI::actionRedo()
 {
 	_pModel->redo();
+	refreshUI();
+}
+
+void GraphicalUI::actionAddRectangle()
+{
+	_pModel->addRectangleStyle();
+	refreshUI();
+}
+
+void GraphicalUI::actionAddCircle()
+{
+	_pModel->addCircleStyle();
+	refreshUI();
+}
+
+void GraphicalUI::actionAddTriangle()
+{
+	_pModel->addTriangleStyle();
+	refreshUI();
+}
+
+void GraphicalUI::actionCleanStyles()
+{
+	_pModel->cleanStyles();
 	refreshUI();
 }

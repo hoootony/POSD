@@ -75,6 +75,18 @@
     <Filter Include="Source Files\View">
       <UniqueIdentifier>{09f83d9d-fd9d-4f68-829e-fee0c453d9c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Component\Decorator">
+      <UniqueIdentifier>{ba59a866-2b87-48cf-9afd-ef5fea46b07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component\Decorator">
+      <UniqueIdentifier>{4d1f13ca-ab7d-4ad6-bc1e-ee5fd0fc0af4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visitor">
+      <UniqueIdentifier>{24041e24-3033-4ea0-9541-761cde36d0cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Visitor">
+      <UniqueIdentifier>{b56f4e8c-cd5a-48b8-b75a-2e10f51e48e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -164,6 +176,27 @@
     <ClCompile Include="GraphicsMindMap.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="Decorator.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayNodeVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveNodeVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GraphicalUI.ui">
@@ -248,6 +281,27 @@
     </ClInclude>
     <ClInclude Include="GraphicsMindMap.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Header Files\Component\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Header Files\Component\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Decorator.h">
+      <Filter>Header Files\Component\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Header Files\Component\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveNodeVisitor.h">
+      <Filter>Header Files\Visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeVisitor.h">
+      <Filter>Header Files\Visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="DisplayNodeVisitor.h">
+      <Filter>Header Files\Visitor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

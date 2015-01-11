@@ -20,6 +20,10 @@ PresentationModel::PresentationModel()
 	_actionEnabled["actionPaste"] = false;
 	_actionEnabled["actionUndo"] = false;
 	_actionEnabled["actionRedo"] = false;
+	_actionEnabled["actionAdd_Rectangle"] = false;
+	_actionEnabled["actionAdd_Circle"] = false;
+	_actionEnabled["actionAdd_Triangle"] = false;
+	_actionEnabled["actionClean_styles"] = false;
 	_isPaste = false;
 }
 
@@ -153,6 +157,7 @@ void PresentationModel::showGuiMap(QGraphicsScene *scene, QMainWindow *parent)
 
 	GraphicsMindMap qMindMap;
 	qMindMap.showGuiMap(scene, mindMap, this, parent);
+	qMindMap.showGuiMapDecorator(scene, _model._mindMapDecorter, this, parent);
 	//cout << _model.showMap();		//debug
 }
 
@@ -184,6 +189,10 @@ void PresentationModel::setGuiRootEdit()
 	_actionEnabled["actionCut"] = false;
 	_actionEnabled["actionCopy"] = false;
 	setGuiPaste();
+	_actionEnabled["actionAdd_Rectangle"] = true;
+	_actionEnabled["actionAdd_Circle"] = true;
+	_actionEnabled["actionAdd_Triangle"] = true;
+	_actionEnabled["actionClean_styles"] = true;
 }
 
 void PresentationModel::setGuiNodeEdit()
@@ -195,6 +204,10 @@ void PresentationModel::setGuiNodeEdit()
 	_actionEnabled["actionInsert_a_Parent"] = true;
 	setGuiCutAndCopy();
 	setGuiPaste();
+	_actionEnabled["actionAdd_Rectangle"] = true;
+	_actionEnabled["actionAdd_Circle"] = true;
+	_actionEnabled["actionAdd_Triangle"] = true;
+	_actionEnabled["actionClean_styles"] = true;
 }
 
 void PresentationModel::setGuiLoaded()
@@ -216,6 +229,11 @@ void PresentationModel::setGuiSelectNull()
 	_actionEnabled["actionCut"] = false;
 	_actionEnabled["actionCopy"] = false;
 	_actionEnabled["actionPaste"] = false;
+	//Decorator
+	_actionEnabled["actionAdd_Rectangle"] = false;
+	_actionEnabled["actionAdd_Circle"] = false;
+	_actionEnabled["actionAdd_Triangle"] = false;
+	_actionEnabled["actionClean_styles"] = false;
 }
 
 void PresentationModel::setGuiCutAndCopy()
@@ -270,4 +288,24 @@ void PresentationModel::setGuiDoCommand()
 	_actionEnabled["actionRedo"] = _model.canRedo();
 	_actionEnabled["actionUndo"] = _model.canUndo(); 
 	clearSelect();
+}
+
+void PresentationModel::addRectangleStyle()
+{
+	_model.addRectangleStyle();
+}
+
+void PresentationModel::addCircleStyle()
+{
+	_model.addCircleStyle();
+}
+
+void PresentationModel::addTriangleStyle()
+{
+	_model.addTriangleStyle();
+}
+
+void PresentationModel::cleanStyles()
+{
+	_model.cleanStyles();
 }

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GraphicalUI_t {
-    QByteArrayData data[18];
-    char stringdata[255];
+    QByteArrayData data[22];
+    char stringdata[326];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -46,7 +46,11 @@ QT_MOC_LITERAL(13, 200, 10),
 QT_MOC_LITERAL(14, 211, 11),
 QT_MOC_LITERAL(15, 223, 9),
 QT_MOC_LITERAL(16, 233, 10),
-QT_MOC_LITERAL(17, 244, 10)
+QT_MOC_LITERAL(17, 244, 10),
+QT_MOC_LITERAL(18, 255, 18),
+QT_MOC_LITERAL(19, 274, 15),
+QT_MOC_LITERAL(20, 290, 17),
+QT_MOC_LITERAL(21, 308, 17)
     },
     "GraphicalUI\0actionExit\0\0actionCreateGraphicalUI\0"
     "actionLoadGraphicalUI\0actionSaveGraphicalUI\0"
@@ -54,7 +58,9 @@ QT_MOC_LITERAL(17, 244, 10)
     "actionInsertAChild\0actionInsertASibling\0"
     "actionInsertAParent\0about\0actionCut\0"
     "actionCopy\0actionPaste\0refreshUI\0"
-    "actionUndo\0actionRedo"
+    "actionUndo\0actionRedo\0actionAddRectangle\0"
+    "actionAddCircle\0actionAddTriangle\0"
+    "actionCleanStyles"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,7 +70,7 @@ static const uint qt_meta_data_GraphicalUI[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -72,24 +78,32 @@ static const uint qt_meta_data_GraphicalUI[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   94,    2, 0x0a /* Public */,
-       3,    0,   95,    2, 0x0a /* Public */,
-       4,    0,   96,    2, 0x0a /* Public */,
-       5,    0,   97,    2, 0x0a /* Public */,
-       6,    0,   98,    2, 0x0a /* Public */,
-       7,    0,   99,    2, 0x0a /* Public */,
-       8,    0,  100,    2, 0x0a /* Public */,
-       9,    0,  101,    2, 0x0a /* Public */,
-      10,    0,  102,    2, 0x0a /* Public */,
-      11,    0,  103,    2, 0x0a /* Public */,
-      12,    0,  104,    2, 0x0a /* Public */,
-      13,    0,  105,    2, 0x0a /* Public */,
-      14,    0,  106,    2, 0x0a /* Public */,
-      15,    0,  107,    2, 0x0a /* Public */,
-      16,    0,  108,    2, 0x0a /* Public */,
-      17,    0,  109,    2, 0x0a /* Public */,
+       1,    0,  114,    2, 0x0a /* Public */,
+       3,    0,  115,    2, 0x0a /* Public */,
+       4,    0,  116,    2, 0x0a /* Public */,
+       5,    0,  117,    2, 0x0a /* Public */,
+       6,    0,  118,    2, 0x0a /* Public */,
+       7,    0,  119,    2, 0x0a /* Public */,
+       8,    0,  120,    2, 0x0a /* Public */,
+       9,    0,  121,    2, 0x0a /* Public */,
+      10,    0,  122,    2, 0x0a /* Public */,
+      11,    0,  123,    2, 0x0a /* Public */,
+      12,    0,  124,    2, 0x0a /* Public */,
+      13,    0,  125,    2, 0x0a /* Public */,
+      14,    0,  126,    2, 0x0a /* Public */,
+      15,    0,  127,    2, 0x0a /* Public */,
+      16,    0,  128,    2, 0x0a /* Public */,
+      17,    0,  129,    2, 0x0a /* Public */,
+      18,    0,  130,    2, 0x0a /* Public */,
+      19,    0,  131,    2, 0x0a /* Public */,
+      20,    0,  132,    2, 0x0a /* Public */,
+      21,    0,  133,    2, 0x0a /* Public */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -131,6 +145,10 @@ void GraphicalUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 13: _t->refreshUI(); break;
         case 14: _t->actionUndo(); break;
         case 15: _t->actionRedo(); break;
+        case 16: _t->actionAddRectangle(); break;
+        case 17: _t->actionAddCircle(); break;
+        case 18: _t->actionAddTriangle(); break;
+        case 19: _t->actionCleanStyles(); break;
         default: ;
         }
     }
@@ -164,13 +182,13 @@ int GraphicalUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 20)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 20;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 16)
+        if (_id < 20)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 16;
+        _id -= 20;
     }
     return _id;
 }

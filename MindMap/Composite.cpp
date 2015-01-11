@@ -100,13 +100,31 @@ bool Composite::haveSibling()	//find node next have node
 		}
 	}
 	return haveSibling;
-	//return false; //error
 }
 
 void Composite::showGuiMap(int depthX, double* depthY)
 {
 	for (list<Component *>::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)
 	{
+		Component* composite = (*it)->getComposite();
+
+		composite->showGuiMap(depthX + 1, depthY);
+		composite->setX(depthX);
+		if (composite->getNodeList().size() == 0)	//判斷有無child
+		{// leaf node
+			composite->setY(*depthY);
+			//(*depthY) += (composite->getHeigh() + Component::AFTER_SPACE);
+			(*depthY) += ((*it)->getHeigh() + Component::AFTER_SPACE);
+		}
+		else
+		{// non leaf nodes
+			double beginY = composite->getNodeList().front()->getY();
+			double endY = composite->getNodeList().back()->getY();
+			composite->setY((endY + beginY) / 2);
+			//(*depthY) = max((*depthY), composite->getY() + composite->getHeigh() + Component::AFTER_SPACE);
+			(*depthY) = max((*depthY), (*it)->getY() + (*it)->getHeigh() + Component::AFTER_SPACE);
+		}
+		/*
 		(*it)->showGuiMap(depthX + 1, depthY);
 		(*it)->setX(depthX);
 		if ((*it)->getNodeList().size() == 0)	//判斷有無child
@@ -121,6 +139,7 @@ void Composite::showGuiMap(int depthX, double* depthY)
 			(*it)->setY((endY + beginY) / 2);
 			(*depthY) = max((*depthY), (*it)->getY() + (*it)->getHeigh() + Component::AFTER_SPACE);
 		}
+		*/
 	}
 
 	if (_type.compare("Root") == 0)
@@ -172,4 +191,24 @@ void Composite::cutNode(list<Component *>& mindmap, list<Component *>& clipBoard
 	}
 	clipBoardList.push_back(this);
 	mindmap.remove(this);
+}
+
+void Composite::draw()
+{
+	cout << "Node: " << _description << "(" << _x << ", " << _y << ", " << _width << ", " << _heigh << ")" << endl;
+	for (list<Component *>::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)
+	{
+		(*it)->draw();
+	}
+}
+
+Component* Composite::getComposite()
+{
+	return this;
+}
+
+void Composite::replaceChild(Component* oldNode, Component* newNode)
+{
+	newNode->setParent(oldNode->getParent());
+	std::replace(_nodeList.begin(), _nodeList.end(), oldNode, newNode);
 }

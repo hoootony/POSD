@@ -22,8 +22,9 @@ Node::~Node()
 
 void Node::addParent(Component *node) 
 {
-	_parent->removeChild(this);	//原本父母親
-	_parent->addChild(node);
+	//_parent->removeChild(this);	//原本父母親
+	//_parent->addChild(node);
+	_parent->replaceChild(this, node);
 
 	node->setParent(_parent);	//插入的節點
 	node->addChild(this);

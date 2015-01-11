@@ -9,6 +9,9 @@
 #include "InsertASiblingNodeCmd.h"
 #include "CutNodeCommand.h"
 #include "PasteNodeCommand.h"
+#include "Circle.h"
+#include "Rectangle.h"
+#include "Triangle.h"
 
 Model::Model()
 {
@@ -295,6 +298,7 @@ void Model::showGuiMap()
 
 	double depthY;
 	_mindMap.front()->showGuiMap(1, &depthY);
+	//_mindMap.front()->draw();
 }
 
 void Model::clearSelect()
@@ -402,4 +406,44 @@ bool Model::canPaste()
 		return false;
 	else
 		return true;
+}
+
+void Model::addRectangleStyle()
+{
+	_selectedNode = new Rectangle(_selectedNode);
+	_mindMapDecorter.push_back(_selectedNode);
+}
+
+void Model::addCircleStyle()
+{
+	_selectedNode = new Circle(_selectedNode);
+	_mindMapDecorter.push_back(_selectedNode);
+}
+
+void Model::addTriangleStyle()
+{
+	_selectedNode = new Triangle(_selectedNode);
+	_mindMapDecorter.push_back(_selectedNode);
+}
+
+void Model::cleanStyles()
+{
+	_selectedNode = _selectedNode->getComposite();
+
+	list<Component *> temp;
+	for (list<Component *>::iterator it = _mindMapDecorter.begin(); it != _mindMapDecorter.end(); ++it)
+	{
+		Component* decortor = (*it);
+		if (decortor->getComposite() == _selectedNode)
+		{
+			temp.push_back(decortor);
+		}
+	}
+
+	for (list<Component *>::iterator it = temp.begin(); it != temp.end(); ++it)
+	{
+		_selectedNode->getParent()->replaceChild(*it, _selectedNode);
+		_mindMapDecorter.remove(*it);
+		//delete (*it);
+	}
 }

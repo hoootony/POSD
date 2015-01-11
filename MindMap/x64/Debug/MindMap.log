@@ -1,40 +1,16 @@
-﻿Build started 2014/12/19 下午 08:20:03.
+﻿Build started 2015/1/11 下午 09:34:55.
      1>Project "D:\GitHub\POSD\MindMap\MindMap.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /IC:\gtest\include /I.\GeneratedFiles /I. /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtCore /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtGui /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt ChangeParentCommand.cpp Component.cpp ComponentFactory.cpp Composite.cpp CutNodeCommand.cpp DeleteComponentCommand.cpp EditComponentCommand.cpp GeneratedFiles\Debug\moc_GraphicalUI.cpp GraphicalUI.cpp GraphicsMindMap.cpp GraphicsNode.cpp InsertAChildNodeCmd.cpp InsertAParentNodeCmd.cpp InsertASiblingNodeCmd.cpp Model.cpp Node.cpp PasteNodeCommand.cpp PresentationModel.cpp Root.cpp TextUIView.cpp main.cpp
-         ChangeParentCommand.cpp
-         Component.cpp
-         ComponentFactory.cpp
-         Composite.cpp
-         CutNodeCommand.cpp
-         DeleteComponentCommand.cpp
-         EditComponentCommand.cpp
-         moc_GraphicalUI.cpp
-         GraphicalUI.cpp
-         GraphicsMindMap.cpp
-         GraphicsNode.cpp
-         InsertAChildNodeCmd.cpp
-         InsertAParentNodeCmd.cpp
-         InsertASiblingNodeCmd.cpp
-         Model.cpp
-         Node.cpp
-         PasteNodeCommand.cpp
-         PresentationModel.cpp
-         Root.cpp
-         TextUIView.cpp
-         Generating Code...
-         Compiling...
-         main.cpp
-         Generating Code...
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\POSD\x64\Debug\\MindMap.exe" /NOLOGO /LIBPATH:C:\Qt\Qt5.3.2\5.3\msvc2013_64\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\POSD\x64\Debug\MindMap.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\POSD\x64\Debug\MindMap.lib" /MACHINE:X64 x64\Debug\MindMap.res
          x64\Debug\ChangeParentCommand.obj
+         x64\Debug\Circle.obj
          x64\Debug\Command.obj
          x64\Debug\CommandManger.obj
          x64\Debug\Component.obj
          x64\Debug\ComponentFactory.obj
          x64\Debug\Composite.obj
          x64\Debug\CutNodeCommand.obj
+         x64\Debug\Decorator.obj
          x64\Debug\DeleteComponentCommand.obj
          x64\Debug\EditComponentCommand.obj
          x64\Debug\moc_GraphicalUI.obj
@@ -51,12 +27,20 @@
          x64\Debug\Node.obj
          x64\Debug\PasteNodeCommand.obj
          x64\Debug\PresentationModel.obj
+         x64\Debug\Rectangle.obj
          x64\Debug\Root.obj
          x64\Debug\Subject.obj
          x64\Debug\TextUIView.obj
+         x64\Debug\Triangle.obj
+         LINK : D:\GitHub\POSD\x64\Debug\\MindMap.exe not found or not built by the last incremental link; performing full link
+     1>Subject.obj : warning LNK4099: PDB 'vc120.pdb' was not found with 'Subject.obj' or at 'D:\GitHub\POSD\x64\Debug\vc120.pdb'; linking object as if no debug info
+     1>IObserver.obj : warning LNK4099: PDB 'vc120.pdb' was not found with 'IObserver.obj' or at 'D:\GitHub\POSD\x64\Debug\vc120.pdb'; linking object as if no debug info
+     1>qrc_GraphicalUI.obj : warning LNK4099: PDB 'vc120.pdb' was not found with 'qrc_GraphicalUI.obj' or at 'D:\GitHub\POSD\x64\Debug\vc120.pdb'; linking object as if no debug info
+     1>CommandManger.obj : warning LNK4099: PDB 'vc120.pdb' was not found with 'CommandManger.obj' or at 'D:\GitHub\POSD\x64\Debug\vc120.pdb'; linking object as if no debug info
+     1>Command.obj : warning LNK4099: PDB 'vc120.pdb' was not found with 'Command.obj' or at 'D:\GitHub\POSD\x64\Debug\vc120.pdb'; linking object as if no debug info
          MindMap.vcxproj -> D:\GitHub\POSD\x64\Debug\MindMap.exe
      1>Done Building Project "D:\GitHub\POSD\MindMap\MindMap.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:37.73
+Time Elapsed 00:00:01.17

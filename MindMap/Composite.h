@@ -38,5 +38,8 @@ public:
 	int getNodeYLevel();
 	virtual Component* clone(ComponentFactory* factory, list<Component *>& clipBoardList);
 	void cutNode(list<Component *>& mindmap, list<Component *>& clipBoardList);
+	void draw(); 
+	Component* Composite::getComposite();
+	void replaceChild(Component* oldNode, Component* newNode);
 };
 

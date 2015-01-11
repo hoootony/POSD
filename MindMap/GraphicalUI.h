@@ -32,6 +32,10 @@ public slots:
 	void refreshUI();
 	void actionUndo();
 	void actionRedo();
+	void actionAddRectangle();
+	void actionAddCircle();
+	void actionAddTriangle();
+	void actionCleanStyles();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);

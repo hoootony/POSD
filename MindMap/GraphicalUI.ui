@@ -76,6 +76,11 @@
     <addaction name="separator"/>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdd_Rectangle"/>
+    <addaction name="actionAdd_Circle"/>
+    <addaction name="actionAdd_Triangle"/>
+    <addaction name="actionClean_styles"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -111,6 +116,11 @@
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
+   <addaction name="separator"/>
+   <addaction name="actionAdd_Rectangle"/>
+   <addaction name="actionAdd_Circle"/>
+   <addaction name="actionAdd_Triangle"/>
+   <addaction name="actionClean_styles"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionEdit">
@@ -268,6 +278,42 @@
    </property>
    <property name="text">
     <string>redo</string>
+   </property>
+  </action>
+  <action name="actionAdd_Rectangle">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/big36.png</normaloff>Resources/icon/big36.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Rectangle</string>
+   </property>
+  </action>
+  <action name="actionAdd_Circle">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/ellipse.png</normaloff>Resources/icon/ellipse.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Circle</string>
+   </property>
+  </action>
+  <action name="actionAdd_Triangle">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/play103.png</normaloff>Resources/icon/play103.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Triangle</string>
+   </property>
+  </action>
+  <action name="actionClean_styles">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/wiping16.png</normaloff>Resources/icon/wiping16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clean styles</string>
    </property>
   </action>
  </widget>

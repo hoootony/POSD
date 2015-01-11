@@ -86,3 +86,13 @@ double Component::getWidth()
 {
 	return _width;
 }
+
+void Component::setXPixel(double xPixel)
+{
+	_xPixel = xPixel;
+}
+
+double Component::getXPixel()
+{
+	return _xPixel;
+}

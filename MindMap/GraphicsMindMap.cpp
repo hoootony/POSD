@@ -20,6 +20,7 @@ void GraphicsMindMap::showGuiMap(QGraphicsScene* scene, list<Component *> mindMa
 		{
 			qreal x = getLocateX(mindMap, (*it)->getX()) + Component::AFTER_SPACE * (*it)->getX();
 			qreal y = (*it)->getY();
+			(*it)->setXPixel(x);
 			//qreal y = (*it)->getY() - (*it)->getHeigh() / 2;
 			QGraphicsItem *qNode = new GraphicsNode(x, y, (*it), pModel, parent);
 			scene->addItem(qNode);
@@ -30,6 +31,44 @@ void GraphicsMindMap::showGuiMap(QGraphicsScene* scene, list<Component *> mindMa
 				//qreal parent_y = (*it)->getParent()->getY();
 				scene->addLine(x, y + (*it)->getHeigh() / 2, parent_x, parent_y);
 			}
+		}
+	}
+}
+
+void GraphicsMindMap::showGuiMapDecorator(QGraphicsScene* scene, list<Component *> decorator, PresentationModel* pModel, QMainWindow *parent)
+{
+	for (list<Component *>::iterator it = decorator.begin(); it != decorator.end(); ++it)
+	{
+		if ((*it)->getType() == "Root" || (*it)->getParent() != NULL)
+		{
+			//qreal x = getLocateX(decorator, (*it)->getX()) + Component::AFTER_SPACE * (*it)->getX() - 5;
+			qreal x = (*it)->getXPixel();
+			qreal y = (*it)->getY();
+			qreal w = (*it)->getWidth();
+			qreal h = (*it)->getHeigh();
+
+			QGraphicsItem *qNode;
+			if ((*it)->getType() == "Rectangle")
+			{
+				//qNode = new QGraphicsRectItem(x, y, w, h);
+				scene->addRect(x, y, w, h, QPen(Qt::blue));
+			}
+			else if ((*it)->getType() == "Circle")
+			{
+				//qNode = new QGraphicsEllipseItem(x, y, w, h);
+				scene->addEllipse(x, y, w, h, QPen(Qt::red));
+			}
+			else if ((*it)->getType() == "Triangle")
+			{
+				QPolygonF triagnle;
+				triagnle.append(QPointF(x, y + h));
+				triagnle.append(QPointF(x + w, y + h));
+				triagnle.append(QPointF(x + w / 2, y));
+				triagnle.append(QPointF(x, y + h));
+				//qNode = new QGraphicsPolygonItem(triagnle);
+				scene->addPolygon(triagnle, QPen(Qt::green));
+			}
+			//scene->addItem(qNode);
 		}
 	}
 }

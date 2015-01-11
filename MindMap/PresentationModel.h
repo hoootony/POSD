@@ -46,4 +46,8 @@ public:
 	void cutNode();
 	void copyNode();
 	void pasteNode();
+	void addRectangleStyle();
+	void addCircleStyle();
+	void addTriangleStyle();
+	void cleanStyles();
 };
