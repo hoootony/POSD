@@ -14,5 +14,6 @@ public:
 	void setParent(Component *node);
 	Component* getParent();
 	Component* clone(ComponentFactory* factory, list<Component *>& clipBoardList);
+	void accept(NodeVisitor* visitor);
 };
 

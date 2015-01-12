@@ -12,6 +12,8 @@
 #include "Circle.h"
 #include "Rectangle.h"
 #include "Triangle.h"
+#include "DisplayNodeVisitor.h"
+#include "SaveNodeVisitor.h"
 
 Model::Model()
 {
@@ -159,6 +161,8 @@ stringstream Model::fileContent()  //取得輸出文件格式內容
 
 string Model::showMap() //印出MindMap
 {
+	_mindMap.front()->accept(new DisplayNodeVisitor());
+	
 	if (_mindMap.size() == 0)
 		return "";
 	stringstream ss;
@@ -176,6 +180,15 @@ Component* Model::selectComponent(int id) //選取節點做插入etc...
 		{
 			_selectedNode = *it;
 			break;
+		}
+	}
+
+	Component* composite = _selectedNode;
+	for (list<Component *>::iterator it = _mindMapDecorter.begin(); it != _mindMapDecorter.end(); ++it)
+	{
+		if (composite == (*it)->getComposite())
+		{
+			_selectedNode = *it;
 		}
 	}
 	return _selectedNode;

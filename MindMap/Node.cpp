@@ -1,5 +1,6 @@
 #include "Node.h"
 #include "ComponentFactory.h"
+#include "NodeVisitor.h"
 
 Node::Node()
 {
@@ -50,4 +51,9 @@ Component* Node::getParent()
 Component* Node::clone(ComponentFactory* factory, list<Component *>& clipBoardList)
 {
 	return Composite::clone(factory, clipBoardList);
+}
+
+void Node::accept(NodeVisitor* visitor)
+{
+	visitor->visitor(this);
 }

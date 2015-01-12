@@ -33,7 +33,9 @@ PresentationModel::~PresentationModel()
 
 string PresentationModel::showMap()
 {
-	return _model.showMap();
+	//return _model.showMap();
+	_model.showMap();
+	return "";
 }
 
 bool PresentationModel::setInsertMode(string mode) //設定插入節點的模式

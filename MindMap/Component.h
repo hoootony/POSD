@@ -6,6 +6,7 @@
 #include <gtest/gtest_prod.h>
 
 using namespace std;
+class NodeVisitor;
 class ComponentFactory;
 class Component
 {
@@ -57,5 +58,6 @@ public:
 	double getXPixel();
 	virtual Component* getComposite() = 0;
 	virtual void replaceChild(Component* oldNode, Component* newNode) = 0;
+	virtual void accept(NodeVisitor* visitor) = 0;
 };
 

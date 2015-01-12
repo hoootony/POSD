@@ -92,3 +92,8 @@ void Decorator::replaceChild(Component* oldNode, Component* newNode)
 {
 	return _component->replaceChild(oldNode, newNode);
 }
+
+void Decorator::accept(NodeVisitor* visitor)
+{
+	_component->accept(visitor);
+}

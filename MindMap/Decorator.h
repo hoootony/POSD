@@ -26,5 +26,5 @@ public:
 	Component* getComposite();
 	void cleanStyles();
 	virtual void replaceChild(Component* oldNode, Component* newNode);
+	virtual void accept(NodeVisitor* visitor);
 };
-

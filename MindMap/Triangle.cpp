@@ -4,9 +4,9 @@ Triangle::Triangle(Component* component)
 {
 	_type = "Triangle";
 	_component = component;
-	_width = _component->getWidth() + 10 * 2;
-	_heigh = _component->getHeigh() + 10 * 2;
-	_y = _component->getY() - 10;
+	_width = _component->getWidth() + 10 + 10;
+	_heigh = _component->getHeigh() + 10 + 20;
+	_y = _component->getY() - 20;
 	_xPixel = _component->getXPixel() - 10;
 	Component *parent = _component->getParent();
 	if (parent != NULL)

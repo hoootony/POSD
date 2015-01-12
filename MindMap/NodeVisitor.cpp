@@ -1,6 +1,5 @@
 #include "NodeVisitor.h"
 
-
 NodeVisitor::NodeVisitor()
 {
 }

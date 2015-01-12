@@ -7,7 +7,7 @@ class NodeVisitor
 public:
 	NodeVisitor();
 	~NodeVisitor();
-	virtual void visitor(Root* root);
-	virtual void visitor(Node* node);
+	virtual void visitor(Root* root) = 0;
+	virtual void visitor(Node* node) = 0;
 };
 

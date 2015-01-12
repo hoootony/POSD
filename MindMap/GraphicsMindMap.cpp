@@ -76,6 +76,27 @@ void GraphicsMindMap::showGuiMapDecorator(QGraphicsScene* scene, list<Component 
 qreal GraphicsMindMap::getMaxWidth(list<Component*> mindMap, Component* node)
 {
 	qreal width = node->getWidth();
+	if (node->getX() == 0) 
+		return width;
+
+	int xParent = node->getParent()->getX();
+	for (list<Component*>::iterator it = mindMap.begin(); it != mindMap.end(); ++it)
+	{
+		if ((*it)->getX() == xParent)	//¬Û¦Plevel
+		{
+			list<Component*> childList = (*it)->getNodeList();
+			for (list<Component*>::iterator itChild = childList.begin(); itChild != childList.end(); ++itChild)
+			{
+				if ((*itChild)->getWidth() > width)
+				{
+					width = (*itChild)->getWidth();
+				}
+			}
+		}
+	}
+	return width;
+	/*
+	qreal width = node->getWidth();
 	for (list<Component*>::iterator it = mindMap.begin(); it != mindMap.end(); ++it)
 	{
 		if ((*it)->getX() == node->getX())
@@ -87,6 +108,7 @@ qreal GraphicsMindMap::getMaxWidth(list<Component*> mindMap, Component* node)
 		}
 	}
 	return width;
+	*/
 }
 
 qreal GraphicsMindMap::getLocateX(list<Component*> mindMap, qreal xLevel)

@@ -6,6 +6,6 @@ class DisplayNodeVisitor :
 public:
 	DisplayNodeVisitor();
 	~DisplayNodeVisitor();
-	void visitor(Root* root);
-	void visitor(Node* node);
+	virtual void visitor(Root* root);
+	virtual void visitor(Node* node);
 };

@@ -1,4 +1,5 @@
 #include "Root.h"
+#include "NodeVisitor.h"
 
 Root::Root(string description, int id)
 {
@@ -34,4 +35,9 @@ Component* Root::getParent()
 Component* Root::clone(ComponentFactory* factory, list<Component *>& clipBoardList)
 {
 	return NULL;
+}
+
+void Root::accept(NodeVisitor* visitor)
+{
+	visitor->visitor(this);
 }
