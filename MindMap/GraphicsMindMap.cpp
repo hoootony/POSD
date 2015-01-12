@@ -18,18 +18,27 @@ void GraphicsMindMap::showGuiMap(QGraphicsScene* scene, list<Component *> mindMa
 	{
 		if ((*it)->getType() == "Root" || (*it)->getParent() != NULL)
 		{
-			qreal x = getLocateX(mindMap, (*it)->getX()) + Component::AFTER_SPACE * (*it)->getX();
-			qreal y = (*it)->getY();
-			(*it)->setXPixel(x);
-			//qreal y = (*it)->getY() - (*it)->getHeigh() / 2;
-			QGraphicsItem *qNode = new GraphicsNode(x, y, (*it), pModel, parent);
-			scene->addItem(qNode);
-			if ((*it)->getType() != "Root")
+			if (!isCollapse((*it))) //ºPÅ|
 			{
-				qreal parent_x = getLocateX(mindMap, (*it)->getParent()->getX()) + Component::AFTER_SPACE * (*it)->getParent()->getX() + (*it)->getParent()->getWidth();
-				qreal parent_y = (*it)->getParent()->getY() + (*it)->getParent()->getHeigh() / 2;
-				//qreal parent_y = (*it)->getParent()->getY();
-				scene->addLine(x, y + (*it)->getHeigh() / 2, parent_x, parent_y);
+				qreal x = getLocateX(mindMap, (*it)->getX()) + Component::AFTER_SPACE * (*it)->getX();
+				qreal y = (*it)->getY();
+				(*it)->setXPixel(x);
+				qreal w = (*it)->getWidth();
+				qreal h = (*it)->getHeigh();
+				//qreal y = (*it)->getY() - (*it)->getHeigh() / 2;
+				QGraphicsItem *qNode = new GraphicsNode(x, y, (*it), pModel, parent);
+				scene->addItem(qNode);
+				if ((*it)->getType() != "Root")
+				{
+					qreal parent_x = getLocateX(mindMap, (*it)->getParent()->getX()) + Component::AFTER_SPACE * (*it)->getParent()->getX() + (*it)->getParent()->getWidth();
+					qreal parent_y = (*it)->getParent()->getY() + (*it)->getParent()->getHeigh() / 2;
+					//qreal parent_y = (*it)->getParent()->getY();
+					scene->addLine(x, y + (*it)->getHeigh() / 2, parent_x, parent_y);
+				}
+
+				//¤w¸g³QºPÅ|
+				if ((*it)->isCollapsed())
+					scene->addEllipse(x + w - 10, y + h -10, 10, 10, QPen(Qt::black), QBrush(Qt::gray));
 			}
 		}
 	}
@@ -126,4 +135,15 @@ qreal GraphicsMindMap::getLocateX(list<Component*> mindMap, qreal xLevel)
 		}
 	}
 	return x;
+}
+
+bool GraphicsMindMap::isCollapse(Component* node)
+{
+	Component* parent = node->getParent();
+	for (;parent != NULL ;parent = parent->getParent())
+	{
+		if (parent->isCollapsed())
+			return true;
+	}
+	return false;
 }

@@ -26,6 +26,8 @@ PresentationModel::PresentationModel()
 	_actionEnabled["actionClean_styles"] = false;
 	_actionEnabled["actionMove_Up"] = false;
 	_actionEnabled["actionMove_Down"] = false;
+	_actionEnabled["actionCollapse"] = false;
+	_actionEnabled["actionExpand"] = false;
 	_isPaste = false;
 }
 
@@ -200,6 +202,9 @@ void PresentationModel::setGuiRootEdit()
 
 	_actionEnabled["actionMove_Up"] = false;
 	_actionEnabled["actionMove_Down"] = false;
+
+	_actionEnabled["actionCollapse"] = !_model.getComponent()->isCollapsed();
+	_actionEnabled["actionExpand"] = _model.getComponent()->isCollapsed();
 }
 
 void PresentationModel::setGuiNodeEdit()
@@ -218,6 +223,9 @@ void PresentationModel::setGuiNodeEdit()
 
 	_actionEnabled["actionMove_Up"] = true;
 	_actionEnabled["actionMove_Down"] = true;
+
+	_actionEnabled["actionCollapse"] = !_model.getComponent()->isCollapsed();
+	_actionEnabled["actionExpand"] = _model.getComponent()->isCollapsed();
 }
 
 void PresentationModel::setGuiLoaded()
@@ -247,6 +255,9 @@ void PresentationModel::setGuiSelectNull()
 
 	_actionEnabled["actionMove_Up"] = false;
 	_actionEnabled["actionMove_Down"] = false;
+
+	_actionEnabled["actionCollapse"] = false;
+	_actionEnabled["actionExpand"] = false;
 }
 
 void PresentationModel::setGuiCutAndCopy()
@@ -331,4 +342,14 @@ void PresentationModel::moveUp()
 void PresentationModel::moveDown()
 {
 	_model.moveDown();
+}
+
+void PresentationModel::collapse()
+{
+	_model.collapse();
+}
+
+void PresentationModel::expand()
+{
+	_model.expand();
 }

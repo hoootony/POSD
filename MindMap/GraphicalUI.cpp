@@ -37,6 +37,8 @@ GraphicalUI::GraphicalUI(PresentationModel *pModel, QWidget *parent)
 	connect(ui.actionClean_styles, SIGNAL(triggered()), this, SLOT(actionCleanStyles()));
 	connect(ui.actionMove_Up, SIGNAL(triggered()), this, SLOT(actionMoveUp()));
 	connect(ui.actionMove_Down, SIGNAL(triggered()), this, SLOT(actionMoveDown()));
+	connect(ui.actionCollapse, SIGNAL(triggered()), this, SLOT(actionCollapse()));
+	connect(ui.actionExpand, SIGNAL(triggered()), this, SLOT(actionExpand()));
 
 	refreshUI();
 }
@@ -171,6 +173,8 @@ void GraphicalUI::refreshUI()
 	ui.actionClean_styles->setEnabled(_pModel->isActionEnabled(ui.actionClean_styles->objectName().toStdString()));
 	ui.actionMove_Up->setEnabled(_pModel->isActionEnabled(ui.actionMove_Up->objectName().toStdString()));
 	ui.actionMove_Down->setEnabled(_pModel->isActionEnabled(ui.actionMove_Down->objectName().toStdString()));
+	ui.actionCollapse->setEnabled(_pModel->isActionEnabled(ui.actionCollapse->objectName().toStdString()));
+	ui.actionExpand->setEnabled(_pModel->isActionEnabled(ui.actionExpand->objectName().toStdString()));
 }
 
 void GraphicalUI::mousePressEvent(QMouseEvent *event)
@@ -231,5 +235,17 @@ void GraphicalUI::actionMoveUp()
 void GraphicalUI::actionMoveDown()
 {
 	_pModel->moveDown();
+	refreshUI();
+}
+
+void GraphicalUI::actionCollapse()
+{
+	_pModel->collapse();
+	refreshUI();
+}
+
+void GraphicalUI::actionExpand()
+{
+	_pModel->expand();
 	refreshUI();
 }

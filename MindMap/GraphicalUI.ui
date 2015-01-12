@@ -85,6 +85,8 @@
     <addaction name="actionMove_Up"/>
     <addaction name="actionMove_Down"/>
     <addaction name="separator"/>
+    <addaction name="actionCollapse"/>
+    <addaction name="actionExpand"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -129,6 +131,8 @@
    <addaction name="actionMove_Up"/>
    <addaction name="actionMove_Down"/>
    <addaction name="separator"/>
+   <addaction name="actionCollapse"/>
+   <addaction name="actionExpand"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionEdit">
@@ -340,6 +344,24 @@
    </property>
    <property name="text">
     <string>Move Down</string>
+   </property>
+  </action>
+  <action name="actionCollapse">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/collapsing.png</normaloff>Resources/icon/collapsing.png</iconset>
+   </property>
+   <property name="text">
+    <string>Collapse</string>
+   </property>
+  </action>
+  <action name="actionExpand">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/expand36.png</normaloff>Resources/icon/expand36.png</iconset>
+   </property>
+   <property name="text">
+    <string>Expand</string>
    </property>
   </action>
  </widget>

@@ -17,5 +17,6 @@ public:
 private:
 	qreal getMaxWidth(list<Component *> mindMap, Component* node);
 	qreal getLocateX(list<Component*> mindMap, qreal xLevel);
+	bool isCollapse(Component* node);
 };
 

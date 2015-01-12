@@ -49,6 +49,8 @@ public:
     QAction *actionClean_styles;
     QAction *actionMove_Up;
     QAction *actionMove_Down;
+    QAction *actionCollapse;
+    QAction *actionExpand;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QGraphicsView *graphicsView;
@@ -163,6 +165,16 @@ public:
         QIcon icon18;
         icon18.addFile(QStringLiteral("Resources/icon/sort48.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionMove_Down->setIcon(icon18);
+        actionCollapse = new QAction(GraphicalUIClass);
+        actionCollapse->setObjectName(QStringLiteral("actionCollapse"));
+        QIcon icon19;
+        icon19.addFile(QStringLiteral("Resources/icon/collapsing.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionCollapse->setIcon(icon19);
+        actionExpand = new QAction(GraphicalUIClass);
+        actionExpand->setObjectName(QStringLiteral("actionExpand"));
+        QIcon icon20;
+        icon20.addFile(QStringLiteral("Resources/icon/expand36.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionExpand->setIcon(icon20);
         centralWidget = new QWidget(GraphicalUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -227,6 +239,8 @@ public:
         menuEdit->addAction(actionMove_Up);
         menuEdit->addAction(actionMove_Down);
         menuEdit->addSeparator();
+        menuEdit->addAction(actionCollapse);
+        menuEdit->addAction(actionExpand);
         menuHelp->addAction(actionAbout);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionLoad);
@@ -254,6 +268,8 @@ public:
         mainToolBar->addAction(actionMove_Up);
         mainToolBar->addAction(actionMove_Down);
         mainToolBar->addSeparator();
+        mainToolBar->addAction(actionCollapse);
+        mainToolBar->addAction(actionExpand);
 
         retranslateUi(GraphicalUIClass);
 
@@ -294,6 +310,8 @@ public:
         actionClean_styles->setText(QApplication::translate("GraphicalUIClass", "Clean styles", 0));
         actionMove_Up->setText(QApplication::translate("GraphicalUIClass", "Move Up", 0));
         actionMove_Down->setText(QApplication::translate("GraphicalUIClass", "Move Down", 0));
+        actionCollapse->setText(QApplication::translate("GraphicalUIClass", "Collapse", 0));
+        actionExpand->setText(QApplication::translate("GraphicalUIClass", "Expand", 0));
         menuFile->setTitle(QApplication::translate("GraphicalUIClass", "File", 0));
         menuEdit->setTitle(QApplication::translate("GraphicalUIClass", "Edit", 0));
         menuHelp->setTitle(QApplication::translate("GraphicalUIClass", "Help", 0));

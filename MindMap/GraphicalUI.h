@@ -38,6 +38,8 @@ public slots:
 	void actionCleanStyles();
 	void actionMoveUp();
 	void actionMoveDown();
+	void actionCollapse();
+	void actionExpand();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);

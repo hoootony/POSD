@@ -75,5 +75,7 @@ public:
 	void cleanStyles();
 	void moveUp();
 	void moveDown();
+	void collapse();
+	void expand();
 };
 

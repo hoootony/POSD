@@ -474,3 +474,13 @@ void Model::moveDown()
 {
 	_selectedNode->moveDown();
 }
+
+void Model::collapse()
+{
+	_selectedNode->setCollapsed(true);
+}
+
+void Model::expand()
+{
+	_selectedNode->setCollapsed(false);
+}
