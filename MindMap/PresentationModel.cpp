@@ -24,6 +24,8 @@ PresentationModel::PresentationModel()
 	_actionEnabled["actionAdd_Circle"] = false;
 	_actionEnabled["actionAdd_Triangle"] = false;
 	_actionEnabled["actionClean_styles"] = false;
+	_actionEnabled["actionMove_Up"] = false;
+	_actionEnabled["actionMove_Down"] = false;
 	_isPaste = false;
 }
 
@@ -195,6 +197,9 @@ void PresentationModel::setGuiRootEdit()
 	_actionEnabled["actionAdd_Circle"] = true;
 	_actionEnabled["actionAdd_Triangle"] = true;
 	_actionEnabled["actionClean_styles"] = true;
+
+	_actionEnabled["actionMove_Up"] = false;
+	_actionEnabled["actionMove_Down"] = false;
 }
 
 void PresentationModel::setGuiNodeEdit()
@@ -210,6 +215,9 @@ void PresentationModel::setGuiNodeEdit()
 	_actionEnabled["actionAdd_Circle"] = true;
 	_actionEnabled["actionAdd_Triangle"] = true;
 	_actionEnabled["actionClean_styles"] = true;
+
+	_actionEnabled["actionMove_Up"] = true;
+	_actionEnabled["actionMove_Down"] = true;
 }
 
 void PresentationModel::setGuiLoaded()
@@ -236,6 +244,9 @@ void PresentationModel::setGuiSelectNull()
 	_actionEnabled["actionAdd_Circle"] = false;
 	_actionEnabled["actionAdd_Triangle"] = false;
 	_actionEnabled["actionClean_styles"] = false;
+
+	_actionEnabled["actionMove_Up"] = false;
+	_actionEnabled["actionMove_Down"] = false;
 }
 
 void PresentationModel::setGuiCutAndCopy()
@@ -310,4 +321,14 @@ void PresentationModel::addTriangleStyle()
 void PresentationModel::cleanStyles()
 {
 	_model.cleanStyles();
+}
+
+void PresentationModel::moveUp()
+{
+	_model.moveUp();
+}
+
+void PresentationModel::moveDown()
+{
+	_model.moveDown();
 }

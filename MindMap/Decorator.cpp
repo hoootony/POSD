@@ -97,3 +97,23 @@ void Decorator::accept(NodeVisitor* visitor)
 {
 	_component->accept(visitor);
 }
+
+void Decorator::moveUp()
+{
+	_component->moveUp();
+}
+
+void Decorator::moveDown()
+{
+	_component->moveDown();
+}
+
+void Decorator::insertChild(Component* location, Component* newNode)
+{
+	_component->insertChild(location, newNode);
+}
+
+Component* Decorator::getNextChild()
+{
+	return _component->getNextChild();
+}

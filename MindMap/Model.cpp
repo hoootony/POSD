@@ -208,12 +208,14 @@ void Model::changeParentByNode(Component* myself, Component* newParent)		//chang
 {
 	if (myself->isChild(newParent))	//new parent is child 
 	{
+		Component* location = myself->getNextChild();
 		myself->getParent()->removeChild(myself);
 		list<Component *> nodeList = myself->getNodeList();
 		for (list<Component *>::iterator it = nodeList.begin(); it != nodeList.end(); ++it)
 		{
 			(*it)->setParent(myself->getParent());
-			myself->getParent()->addChild(*it);
+			//myself->getParent()->addChild(*it);
+			myself->getParent()->insertChild(location, *it);
 			myself->removeChild(*it);
 		}
 		myself->setParent(newParent);
@@ -244,10 +246,12 @@ void Model::deleteComponent(Component* component)	//delete node
 	component->setSelected(false);
 	list<Component *> nodelist = component->getNodeList();
 	Component* parent = component->getParent();
+	Component* location = component->getNextChild();
 	parent->removeChild(component);
 	for (list<Component *>::iterator it = nodelist.begin(); it != nodelist.end(); ++it)
 	{
-		parent->addChild(*it);
+		//parent->addChild(*it);
+		parent->insertChild(location, *it);
 		component->removeChild(*it);
 	}
 	_mindMap.remove(component);
@@ -459,4 +463,14 @@ void Model::cleanStyles()
 		_mindMapDecorter.remove(*it);
 		//delete (*it);
 	}
+}
+
+void Model::moveUp()
+{
+	_selectedNode->moveUp();
+}
+
+void Model::moveDown()
+{
+	_selectedNode->moveDown();
 }

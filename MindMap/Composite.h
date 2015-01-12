@@ -41,5 +41,9 @@ public:
 	void draw(); 
 	Component* Composite::getComposite();
 	void replaceChild(Component* oldNode, Component* newNode);
+	virtual void moveUp();
+	virtual void moveDown();
+	virtual void insertChild(Component* location, Component* newNode);
+	virtual Component* getNextChild();
 };
 

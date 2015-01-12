@@ -139,13 +139,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\MindMap\ChangeParentCommand.cpp" />
+    <ClCompile Include="..\MindMap\Circle.cpp" />
     <ClCompile Include="..\MindMap\Command.cpp" />
     <ClCompile Include="..\MindMap\CommandManger.cpp" />
     <ClCompile Include="..\MindMap\Component.cpp" />
     <ClCompile Include="..\MindMap\ComponentFactory.cpp" />
     <ClCompile Include="..\MindMap\Composite.cpp" />
     <ClCompile Include="..\MindMap\CutNodeCommand.cpp" />
+    <ClCompile Include="..\MindMap\Decorator.cpp" />
     <ClCompile Include="..\MindMap\DeleteComponentCommand.cpp" />
+    <ClCompile Include="..\MindMap\DisplayNodeVisitor.cpp" />
     <ClCompile Include="..\MindMap\EditComponentCommand.cpp" />
     <ClCompile Include="..\MindMap\GraphicsMindMap.cpp" />
     <ClCompile Include="..\MindMap\GraphicsNode.cpp" />
@@ -155,10 +158,14 @@
     <ClCompile Include="..\MindMap\IObserver.cpp" />
     <ClCompile Include="..\MindMap\Model.cpp" />
     <ClCompile Include="..\MindMap\Node.cpp" />
+    <ClCompile Include="..\MindMap\NodeVisitor.cpp" />
     <ClCompile Include="..\MindMap\PasteNodeCommand.cpp" />
     <ClCompile Include="..\MindMap\PresentationModel.cpp" />
+    <ClCompile Include="..\MindMap\Rectangle.cpp" />
     <ClCompile Include="..\MindMap\Root.cpp" />
+    <ClCompile Include="..\MindMap\SaveNodeVisitor.cpp" />
     <ClCompile Include="..\MindMap\Subject.cpp" />
+    <ClCompile Include="..\MindMap\Triangle.cpp" />
     <ClCompile Include="CommandMangerTest.cpp" />
     <ClCompile Include="ComponentFactoryTest.cpp" />
     <ClCompile Include="ComponentTest.cpp" />

@@ -35,6 +35,8 @@ GraphicalUI::GraphicalUI(PresentationModel *pModel, QWidget *parent)
 	connect(ui.actionAdd_Circle, SIGNAL(triggered()), this, SLOT(actionAddCircle()));
 	connect(ui.actionAdd_Triangle, SIGNAL(triggered()), this, SLOT(actionAddTriangle()));
 	connect(ui.actionClean_styles, SIGNAL(triggered()), this, SLOT(actionCleanStyles()));
+	connect(ui.actionMove_Up, SIGNAL(triggered()), this, SLOT(actionMoveUp()));
+	connect(ui.actionMove_Down, SIGNAL(triggered()), this, SLOT(actionMoveDown()));
 
 	refreshUI();
 }
@@ -167,7 +169,8 @@ void GraphicalUI::refreshUI()
 	ui.actionAdd_Circle->setEnabled(_pModel->isActionEnabled(ui.actionAdd_Circle->objectName().toStdString()));
 	ui.actionAdd_Triangle->setEnabled(_pModel->isActionEnabled(ui.actionAdd_Triangle->objectName().toStdString()));
 	ui.actionClean_styles->setEnabled(_pModel->isActionEnabled(ui.actionClean_styles->objectName().toStdString()));
-		
+	ui.actionMove_Up->setEnabled(_pModel->isActionEnabled(ui.actionMove_Up->objectName().toStdString()));
+	ui.actionMove_Down->setEnabled(_pModel->isActionEnabled(ui.actionMove_Down->objectName().toStdString()));
 }
 
 void GraphicalUI::mousePressEvent(QMouseEvent *event)
@@ -216,5 +219,17 @@ void GraphicalUI::actionAddTriangle()
 void GraphicalUI::actionCleanStyles()
 {
 	_pModel->cleanStyles();
+	refreshUI();
+}
+
+void GraphicalUI::actionMoveUp()
+{
+	_pModel->moveUp();
+	refreshUI();
+}
+
+void GraphicalUI::actionMoveDown()
+{
+	_pModel->moveDown();
 	refreshUI();
 }

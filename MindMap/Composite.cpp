@@ -12,6 +12,7 @@ Composite::~Composite()
 
 void Composite::addChild(Component *node)
 {
+	/*
 	if (_nodeList.size() == 0) 
 	{
 		_nodeList.push_back(node);	//加入節點
@@ -28,6 +29,8 @@ void Composite::addChild(Component *node)
 		}
 		_nodeList.insert(it, node);
 	}
+	*/
+	_nodeList.push_back(node);	//加入節點
 	node->setParent(this);	//設定父母親
 }
 
@@ -211,4 +214,82 @@ void Composite::replaceChild(Component* oldNode, Component* newNode)
 {
 	newNode->setParent(oldNode->getParent());
 	std::replace(_nodeList.begin(), _nodeList.end(), oldNode, newNode);
+}
+
+void Composite::moveUp()
+{
+	Component* parent = this->getParent();
+	list<Component*> childList = parent->getNodeList();
+	list<Component*>::iterator it;
+	for (it = childList.begin(); it != childList.end(); ++it)
+	{
+		if ((*it) == this && (*it) != childList.front())
+		{
+			--it;
+			parent->removeChild(this);
+			parent->insertChild((*it), this);
+			break;
+		}
+	}
+}
+
+void Composite::moveDown()
+{
+	Component* parent = this->getParent();
+	list<Component*> childList = parent->getNodeList();
+	list<Component*>::iterator it;
+	for (it = childList.begin(); it != childList.end(); ++it)
+	{
+		if ((*it) == this && (*it) != childList.back())
+		{
+			++it;
+			if ((*it) == childList.back())
+			{
+				parent->removeChild(this);
+				parent->addChild(this);
+			}
+			else
+			{
+				++it;
+				parent->removeChild(this);
+				parent->insertChild((*it), this);
+			}
+			break;
+		}
+	}
+}
+
+void Composite::insertChild(Component* location, Component* newNode)
+{
+	if (location == NULL)
+	{
+		_nodeList.push_back(newNode);
+		return;
+	}
+
+	for (list<Component*>::iterator it = _nodeList.begin(); it != _nodeList.end(); ++it)
+	{
+		if ((*it) == location)
+		{
+			_nodeList.insert(it, newNode);
+		}
+	}
+}
+
+Component* Composite::getNextChild()
+{
+	if (!this->haveSibling())
+		return NULL;
+
+	list<Component*> childList = this->getParent()->getNodeList();
+	list<Component*>::iterator it;
+	for (it = childList.begin(); it != childList.end(); ++it)
+	{
+		if ((*it) == this)
+		{
+			++it;
+			break;
+		}
+	}
+	return (*it);
 }

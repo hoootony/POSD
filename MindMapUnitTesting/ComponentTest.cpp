@@ -28,4 +28,7 @@ TEST_F(ComponentTest, component)
 
 	_component->setDescription("House@123.456");
 	ASSERT_EQ("House@123.456", _component->getDescription());
+
+	_component->setDescription("House@123.45699999999999999999999999999999999999999999999999999999999");
+	ASSERT_EQ("House@123.45699999999999999999999999999999999999999999999999999999999", _component->getDescription());
 }

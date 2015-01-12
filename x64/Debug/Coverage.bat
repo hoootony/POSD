@@ -1,2 +1,2 @@
-OpenCppCoverage --sources D:\MindMap -- MindMapUnitTesting.exe
+OpenCppCoverage --sources D:\GitHub\POSD\ -- MindMapUnitTesting.exe
 pause

@@ -22,6 +22,8 @@ protected:
 	int _x;	//x level by int
 	double _xPixel;
 	double _y;	//y pixel loaction
+	bool _collapsed = false;
+	int _childOrder;
 public:
 	static const qreal MAX_WIDTH;
 	static const qreal AFTER_SPACE;  
@@ -59,5 +61,11 @@ public:
 	virtual Component* getComposite() = 0;
 	virtual void replaceChild(Component* oldNode, Component* newNode) = 0;
 	virtual void accept(NodeVisitor* visitor) = 0;
+	virtual void moveUp() = 0;
+	virtual void moveDown() = 0;
+	virtual bool isCollapsed();
+	virtual void setCollapsed(bool collapsed);
+	virtual void insertChild(Component* location, Component* newNode) = 0;
+	virtual Component* getNextChild() = 0;
 };
 

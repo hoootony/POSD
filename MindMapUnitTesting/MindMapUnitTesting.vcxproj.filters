@@ -50,6 +50,12 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Source Files\Component\Decorator">
+      <UniqueIdentifier>{a31176bb-8164-4577-80a8-a447fdaaa992}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visitor">
+      <UniqueIdentifier>{f17f9543-43b7-4da7-b75a-4aaf578a0bf9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\MindMap\ChangeParentCommand.cpp">
@@ -141,6 +147,27 @@
     </ClCompile>
     <ClCompile Include="..\MindMap\PresentationModel.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Circle.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Decorator.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Rectangle.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\Triangle.cpp">
+      <Filter>Source Files\Component\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\DisplayNodeVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\SaveNodeVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MindMap\NodeVisitor.cpp">
+      <Filter>Source Files\Visitor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

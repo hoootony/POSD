@@ -73,5 +73,7 @@ public:
 	void addCircleStyle();
 	void addTriangleStyle();
 	void cleanStyles();
+	void moveUp();
+	void moveDown();
 };
 

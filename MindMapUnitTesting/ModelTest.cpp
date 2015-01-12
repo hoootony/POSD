@@ -292,3 +292,58 @@ TEST_F(ModelTest, copyAndPasteNode)
 	s << "¡@¡@¡@¡@¡@¡@¡Ï¡ÐNode2(Node,ID:5)" << endl;
 	ASSERT_EQ(s.str(), _model->showMap());
 }
+
+TEST_F(ModelTest, addAndCleanStyle)
+{
+	_model->selectComponent(1);
+	_model->addRectangleStyle();
+	ASSERT_EQ(_model->selectComponent(1)->getParent()->getNodeList().front()->getType(), "Rectangle");
+	_model->addTriangleStyle();
+	ASSERT_EQ(_model->selectComponent(1)->getParent()->getNodeList().front()->getType(), "Triangle");
+	_model->addCircleStyle();
+	ASSERT_EQ(_model->selectComponent(1)->getParent()->getNodeList().front()->getType(), "Circle");
+
+	_model->cleanStyles();
+	ASSERT_EQ(_model->selectComponent(1)->getParent()->getNodeList().front()->getType(), "Node");
+}
+
+TEST_F(ModelTest, showGuiMap)
+{
+	_model->showGuiMap();
+	ASSERT_EQ(_model->selectComponent(0)->getX(), 0);
+	ASSERT_EQ(_model->selectComponent(1)->getX(), 1);
+	ASSERT_EQ(_model->selectComponent(2)->getX(), 2);
+	ASSERT_EQ(_model->selectComponent(3)->getX(), 1);
+}
+
+TEST_F(ModelTest, moveUp)
+{
+	_model->selectComponent(3)->moveUp();
+
+	stringstream ss;
+	ss << "The mind map TestMindMap is displayed as follows:" << endl;
+	ss << "¡Ï¡ÐTestMindMap(Root,ID:0)" << endl;
+	ss << "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" << endl;
+	ss << "¡@¡@¡Ï¡ÐNode1(Node,ID:1)" << endl;
+	ss << "¡@¡@¡@¡@¡Ï¡ÐNode2(Node,ID:2)" << endl;
+	ASSERT_EQ(ss.str(), _model->showMap());
+
+	_model->selectComponent(3)->moveUp();
+	ASSERT_EQ(ss.str(), _model->showMap());
+}
+
+TEST_F(ModelTest, moveDown)
+{
+	_model->selectComponent(1)->moveDown();
+
+	stringstream ss;
+	ss << "The mind map TestMindMap is displayed as follows:" << endl;
+	ss << "¡Ï¡ÐTestMindMap(Root,ID:0)" << endl;
+	ss << "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" << endl;
+	ss << "¡@¡@¡Ï¡ÐNode1(Node,ID:1)" << endl;
+	ss << "¡@¡@¡@¡@¡Ï¡ÐNode2(Node,ID:2)" << endl;
+	ASSERT_EQ(ss.str(), _model->showMap());
+
+	_model->selectComponent(1)->moveDown();
+	ASSERT_EQ(ss.str(), _model->showMap());
+}

@@ -36,6 +36,8 @@ public slots:
 	void actionAddCircle();
 	void actionAddTriangle();
 	void actionCleanStyles();
+	void actionMoveUp();
+	void actionMoveDown();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);

@@ -70,3 +70,33 @@ TEST_F(CompositeTest, getMap)
 	ss << "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" << endl;
 	ASSERT_EQ(ss.str(), _composite1->getMap(1).str());
 }
+
+TEST_F(CompositeTest, moveUp)
+{
+	_composite3->moveUp();
+
+	stringstream ss;
+	ss << "¡Ï¡ÐNode1(Node,ID:1)" << endl;
+	ss << "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" << endl;
+	ss << "¡@¡@¡Ï¡ÐNode2(Node,ID:2)" << endl;
+	ss << "¡@¡@¡@¡@¡Ï¡ÐNode4(Node,ID:4)" << endl;
+	ASSERT_EQ(ss.str(), _composite1->getMap(1).str());
+
+	_composite3->moveUp();
+	ASSERT_EQ(ss.str(), _composite1->getMap(1).str());
+}
+
+TEST_F(CompositeTest, moveDown)
+{
+	_composite2->moveDown();
+
+	stringstream ss;
+	ss << "¡Ï¡ÐNode1(Node,ID:1)" << endl;
+	ss << "¡@¡@¡Ï¡ÐNode3(Node,ID:3)" << endl;
+	ss << "¡@¡@¡Ï¡ÐNode2(Node,ID:2)" << endl;
+	ss << "¡@¡@¡@¡@¡Ï¡ÐNode4(Node,ID:4)" << endl;
+	ASSERT_EQ(ss.str(), _composite1->getMap(1).str());
+
+	_composite2->moveDown();
+	ASSERT_EQ(ss.str(), _composite1->getMap(1).str());
+}

@@ -96,3 +96,13 @@ double Component::getXPixel()
 {
 	return _xPixel;
 }
+
+bool Component::isCollapsed()
+{
+	return _collapsed;
+}
+
+void Component::setCollapsed(bool collapsed)
+{
+	_collapsed = collapsed;
+}

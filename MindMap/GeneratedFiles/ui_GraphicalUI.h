@@ -47,6 +47,8 @@ public:
     QAction *actionAdd_Circle;
     QAction *actionAdd_Triangle;
     QAction *actionClean_styles;
+    QAction *actionMove_Up;
+    QAction *actionMove_Down;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QGraphicsView *graphicsView;
@@ -151,6 +153,16 @@ public:
         QIcon icon16;
         icon16.addFile(QStringLiteral("Resources/icon/wiping16.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionClean_styles->setIcon(icon16);
+        actionMove_Up = new QAction(GraphicalUIClass);
+        actionMove_Up->setObjectName(QStringLiteral("actionMove_Up"));
+        QIcon icon17;
+        icon17.addFile(QStringLiteral("Resources/icon/sort47.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionMove_Up->setIcon(icon17);
+        actionMove_Down = new QAction(GraphicalUIClass);
+        actionMove_Down->setObjectName(QStringLiteral("actionMove_Down"));
+        QIcon icon18;
+        icon18.addFile(QStringLiteral("Resources/icon/sort48.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionMove_Down->setIcon(icon18);
         centralWidget = new QWidget(GraphicalUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -211,6 +223,10 @@ public:
         menuEdit->addAction(actionAdd_Circle);
         menuEdit->addAction(actionAdd_Triangle);
         menuEdit->addAction(actionClean_styles);
+        menuEdit->addSeparator();
+        menuEdit->addAction(actionMove_Up);
+        menuEdit->addAction(actionMove_Down);
+        menuEdit->addSeparator();
         menuHelp->addAction(actionAbout);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionLoad);
@@ -234,6 +250,10 @@ public:
         mainToolBar->addAction(actionAdd_Circle);
         mainToolBar->addAction(actionAdd_Triangle);
         mainToolBar->addAction(actionClean_styles);
+        mainToolBar->addSeparator();
+        mainToolBar->addAction(actionMove_Up);
+        mainToolBar->addAction(actionMove_Down);
+        mainToolBar->addSeparator();
 
         retranslateUi(GraphicalUIClass);
 
@@ -272,6 +292,8 @@ public:
         actionAdd_Circle->setText(QApplication::translate("GraphicalUIClass", "Add Circle", 0));
         actionAdd_Triangle->setText(QApplication::translate("GraphicalUIClass", "Add Triangle", 0));
         actionClean_styles->setText(QApplication::translate("GraphicalUIClass", "Clean styles", 0));
+        actionMove_Up->setText(QApplication::translate("GraphicalUIClass", "Move Up", 0));
+        actionMove_Down->setText(QApplication::translate("GraphicalUIClass", "Move Down", 0));
         menuFile->setTitle(QApplication::translate("GraphicalUIClass", "File", 0));
         menuEdit->setTitle(QApplication::translate("GraphicalUIClass", "Edit", 0));
         menuHelp->setTitle(QApplication::translate("GraphicalUIClass", "Help", 0));

@@ -1,21 +1,20 @@
-﻿Build started 2014/12/19 下午 07:32:59.
+﻿Build started 2015/1/12 下午 09:36:53.
      1>Project "D:\GitHub\POSD\MindMapUnitTesting\MindMapUnitTesting.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /Ic:\gtest\include /I. /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtCore /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtGui /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt ..\MindMap\CutNodeCommand.cpp ..\MindMap\GraphicsMindMap.cpp ..\MindMap\PasteNodeCommand.cpp ..\MindMap\PresentationModel.cpp
-         CutNodeCommand.cpp
-         GraphicsMindMap.cpp
-         PasteNodeCommand.cpp
-         PresentationModel.cpp
-         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /Ic:\gtest\include /I. /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtCore /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtGui /IC:\Qt\Qt5.3.2\5.3\msvc2013_64\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt ModelTest.cpp
+         ModelTest.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\POSD\x64\Debug\\MindMapUnitTesting.exe" /NOLOGO /LIBPATH:C:\Qt\Qt5.3.2\5.3\msvc2013_64\lib c:\gtest\lib\gtestd.lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\POSD\x64\Debug\MindMapUnitTesting.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\POSD\x64\Debug\MindMapUnitTesting.lib" /MACHINE:X64 x64\Debug\ChangeParentCommand.obj
+         x64\Debug\Circle.obj
          x64\Debug\Command.obj
          x64\Debug\CommandManger.obj
          x64\Debug\Component.obj
          x64\Debug\ComponentFactory.obj
          x64\Debug\Composite.obj
          x64\Debug\CutNodeCommand.obj
+         x64\Debug\Decorator.obj
          x64\Debug\DeleteComponentCommand.obj
+         x64\Debug\DisplayNodeVisitor.obj
          x64\Debug\EditComponentCommand.obj
          x64\Debug\GraphicsMindMap.obj
          x64\Debug\GraphicsNode.obj
@@ -25,10 +24,14 @@
          x64\Debug\IObserver.obj
          x64\Debug\Model.obj
          x64\Debug\Node.obj
+         x64\Debug\NodeVisitor.obj
          x64\Debug\PasteNodeCommand.obj
          x64\Debug\PresentationModel.obj
+         x64\Debug\Rectangle.obj
          x64\Debug\Root.obj
+         x64\Debug\SaveNodeVisitor.obj
          x64\Debug\Subject.obj
+         x64\Debug\Triangle.obj
          x64\Debug\CommandMangerTest.obj
          x64\Debug\ComponentFactoryTest.obj
          x64\Debug\ComponentTest.obj
@@ -44,4 +47,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.84
+Time Elapsed 00:00:02.57

@@ -81,6 +81,10 @@
     <addaction name="actionAdd_Circle"/>
     <addaction name="actionAdd_Triangle"/>
     <addaction name="actionClean_styles"/>
+    <addaction name="separator"/>
+    <addaction name="actionMove_Up"/>
+    <addaction name="actionMove_Down"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -121,6 +125,10 @@
    <addaction name="actionAdd_Circle"/>
    <addaction name="actionAdd_Triangle"/>
    <addaction name="actionClean_styles"/>
+   <addaction name="separator"/>
+   <addaction name="actionMove_Up"/>
+   <addaction name="actionMove_Down"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionEdit">
@@ -314,6 +322,24 @@
    </property>
    <property name="text">
     <string>Clean styles</string>
+   </property>
+  </action>
+  <action name="actionMove_Up">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/sort47.png</normaloff>Resources/icon/sort47.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move Up</string>
+   </property>
+  </action>
+  <action name="actionMove_Down">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/icon/sort48.png</normaloff>Resources/icon/sort48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move Down</string>
    </property>
   </action>
  </widget>

@@ -27,4 +27,8 @@ public:
 	void cleanStyles();
 	virtual void replaceChild(Component* oldNode, Component* newNode);
 	virtual void accept(NodeVisitor* visitor);
+	virtual void moveUp();
+	virtual void moveDown();
+	virtual void insertChild(Component* location, Component* newNode);
+	virtual Component* getNextChild();
 };
